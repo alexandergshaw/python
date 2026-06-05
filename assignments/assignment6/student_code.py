@@ -99,20 +99,23 @@ def get_dashboard_payload():
       5. Return them in the payload.
 
     Remember: in a real program you'd use open() to read from disk.
-    Here, store your CSV data in a string variable and call .split("\\n")
+    Here, store your CSV data in a string variable and call .split("\n")
     to get the lines — the logic is identical to reading a real file.
     """
     # ── Simulate file contents as a string ────────────────────────────────
     # Replace with your own CSV data.  Use commas to separate columns.
-    # csv_data = \"\"\"name,score
-    # Ana,92
-    # Bo,85
-    # Cara,78
-    # Dan,91
-    # Eve,67\"\"\"
+    # Paste your CSV rows as separate comment lines like this:
+    # csv_data = (
+    #     "name,score\n"
+    #     "Ana,92\n"
+    #     "Bo,85\n"
+    #     "Cara,78\n"
+    #     "Dan,91\n"
+    #     "Eve,67"
+    # )
 
     # ── Parse the CSV ─────────────────────────────────────────────────────
-    # lines  = csv_data.strip().split("\\n")
+    # lines  = csv_data.strip().split("\n")
     # header = lines[0].split(",")        # skip the header row
     # names  = []
     # scores = []
