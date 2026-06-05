@@ -2,10 +2,29 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { NextRequest, NextResponse } from "next/server";
 
+const ALLOWED_ASSIGNMENTS = new Set([
+  "assignment0",
+  "assignment1",
+  "assignment2",
+  "assignment3",
+  "review1",
+  "exam1",
+  "assignment4",
+  "assignment5",
+  "assignment6",
+  "assignment7",
+  "assignment8",
+  "assignment9",
+  "assignment10",
+  "review2",
+  "exam2",
+  "final",
+]);
+
 export async function GET(request: NextRequest) {
   const assignment = request.nextUrl.searchParams.get("assignment");
 
-  if (!assignment || !/^[a-z0-9]+$/i.test(assignment)) {
+  if (!assignment || !ALLOWED_ASSIGNMENTS.has(assignment)) {
     return NextResponse.json({ error: "Invalid assignment value" }, { status: 400 });
   }
 
