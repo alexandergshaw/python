@@ -169,6 +169,36 @@ async function evaluateAssignment(pyodide: PyodideInterface, assignment: Assignm
   };
 }
 
+/** Skeleton shimmer block shown while Pyodide is loading */
+function SkeletonCard() {
+  return (
+    <div className="animate-pulse rounded-xl border p-4" style={{ borderColor: "var(--border-subtle)", background: "var(--bg-card)" }}>
+      <div className="mb-3 h-3 w-2/3 rounded-full" style={{ background: "var(--border-subtle)" }} />
+      <div className="space-y-2">
+        <div className="h-2 rounded-full" style={{ background: "var(--border-subtle)" }} />
+        <div className="h-2 w-4/5 rounded-full" style={{ background: "var(--border-subtle)" }} />
+        <div className="h-2 w-3/5 rounded-full" style={{ background: "var(--border-subtle)" }} />
+      </div>
+    </div>
+  );
+}
+
+/** Mini bar for the dashboard widget — renders a proportional bar next to each value */
+function MiniBar({ value, max }: { value: number; max: number }) {
+  const pct = max > 0 ? Math.max(2, Math.round((Math.abs(value) / max) * 100)) : 2;
+  return (
+    <div className="mt-0.5 h-1.5 rounded-full" style={{ background: "var(--border-subtle)" }}>
+      <div
+        className="h-full rounded-full transition-all duration-500"
+        style={{
+          width: `${pct}%`,
+          background: "linear-gradient(90deg, var(--accent-500), var(--accent-violet))",
+        }}
+      />
+    </div>
+  );
+}
+
 export default function Home() {
   const [statuses, setStatuses] = useState<AssignmentStatus[]>([]);
   const [loading, setLoading] = useState(true);
@@ -223,72 +253,248 @@ export default function Home() {
     [statuses],
   );
 
+  const completedCount = useMemo(() => statuses.filter((s) => s.complete).length, [statuses]);
+  const allComplete = !loading && statuses.length > 0 && statuses.every((s) => s.complete);
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <main className="mx-auto flex w-full max-w-7xl gap-6 p-6 md:p-10">
-        <aside className="w-full max-w-xs rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-          <h1 className="text-lg font-semibold">Course Progress</h1>
-          <p className="mt-1 text-sm text-slate-600">Complete each student_code.py to unlock dashboard widgets.</p>
-          <ul className="mt-4 space-y-3">
+    <div className="min-h-screen" style={{ background: "var(--bg-base)" }}>
+      {/* ── Top bar ────────────────────────────────────────────────────── */}
+      <header
+        className="sticky top-0 z-20 flex items-center justify-between px-6 py-3"
+        style={{
+          background: "rgba(8,11,18,0.85)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid var(--border-subtle)",
+        }}
+      >
+        <div className="flex items-center gap-3">
+          {/* Logo mark */}
+          <div
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold text-white"
+            style={{ background: "linear-gradient(135deg, var(--accent-600), var(--accent-violet))" }}
+          >
+            Py
+          </div>
+          <span className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+            Personal Data Dashboard Course
+          </span>
+        </div>
+
+        {/* Global progress pill */}
+        {!loading && (
+          <div
+            className="flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
+            style={{ background: "var(--bg-surface)", border: "1px solid var(--border-subtle)", color: "var(--text-secondary)" }}
+          >
+            <span
+              className="h-2 w-2 rounded-full"
+              style={{ background: allComplete ? "var(--complete-fg)" : "var(--accent-500)" }}
+            />
+            {completedCount} / {ASSIGNMENTS.length} complete
+          </div>
+        )}
+      </header>
+
+      <main className="mx-auto flex w-full max-w-7xl gap-6 px-4 py-8 md:px-8">
+        {/* ── Sidebar ──────────────────────────────────────────────────── */}
+        <aside
+          className="w-full max-w-[260px] shrink-0 self-start rounded-2xl p-4"
+          style={{
+            background: "var(--bg-surface)",
+            border: "1px solid var(--border-subtle)",
+            boxShadow: "var(--shadow-card)",
+            position: "sticky",
+            top: "64px",
+          }}
+        >
+          <h1 className="text-base font-bold gradient-text">Course Progress</h1>
+          <p className="mt-1 text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+            Complete each <code className="rounded px-1 py-0.5 font-mono text-[10px]" style={{ background: "var(--bg-card)", color: "var(--accent-400)" }}>student_code.py</code> to unlock dashboard widgets.
+          </p>
+
+          {/* Progress bar */}
+          {!loading && (
+            <div className="mt-3">
+              <div className="mb-1 flex justify-between text-[10px]" style={{ color: "var(--text-muted)" }}>
+                <span>Progress</span>
+                <span>{Math.round((completedCount / ASSIGNMENTS.length) * 100)}%</span>
+              </div>
+              <div className="h-1.5 rounded-full" style={{ background: "var(--border-subtle)" }}>
+                <div
+                  className="h-full rounded-full transition-all duration-700"
+                  style={{
+                    width: `${(completedCount / ASSIGNMENTS.length) * 100}%`,
+                    background: "linear-gradient(90deg, var(--accent-500), var(--accent-violet))",
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          <ul className="mt-4 space-y-1.5">
             {(loading ? ASSIGNMENTS : statuses).map((assignment) => {
               const complete = !loading && statuses.find((s) => s.id === assignment.id)?.complete;
               return (
-                <li key={assignment.id} className="rounded-lg border border-slate-200 p-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-sm font-medium">{assignment.id}</span>
+                <li
+                  key={assignment.id}
+                  className="group rounded-xl p-2.5 transition-colors duration-150"
+                  style={{
+                    background: complete ? "rgba(52,211,153,0.07)" : "var(--bg-card)",
+                    border: `1px solid ${complete ? "rgba(52,211,153,0.25)" : "var(--border-subtle)"}`,
+                  }}
+                >
+                  <div className="flex items-center justify-between gap-1">
                     <span
-                      className={`rounded-full px-2 py-0.5 text-xs font-medium ${
-                        complete ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-800"
-                      }`}
+                      className="truncate text-xs font-semibold"
+                      style={{ color: complete ? "var(--complete-fg)" : "var(--text-primary)" }}
                     >
-                      {complete ? "Complete" : "Locked"}
+                      {assignment.id}
+                    </span>
+                    <span
+                      className="shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide"
+                      style={
+                        loading
+                          ? { background: "var(--border-subtle)", color: "var(--text-muted)" }
+                          : complete
+                          ? { background: "var(--complete-bg)", color: "var(--complete-fg)" }
+                          : { background: "var(--locked-bg)", color: "var(--locked-fg)" }
+                      }
+                    >
+                      {loading ? "…" : complete ? "✓ done" : "locked"}
                     </span>
                   </div>
-                  <p className="mt-1 text-xs text-slate-600">{assignment.week}</p>
-                  <p className="text-xs text-slate-700">{assignment.title}</p>
+                  <p className="mt-0.5 text-[10px]" style={{ color: "var(--text-secondary)" }}>
+                    {assignment.week} — {assignment.title}
+                  </p>
                 </li>
               );
             })}
           </ul>
         </aside>
 
-        <section className="flex-1 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h2 className="text-lg font-semibold">Personal Data Dashboard</h2>
-          <p className="mt-1 text-sm text-slate-600">
-            Widgets appear automatically when `get_dashboard_payload()` returns valid, non-trivial data.
-          </p>
-
-          <div className="mt-5 grid gap-4 md:grid-cols-2">
-            {unlockedWidgets.map((status) => (
-              <article key={status.id} className="rounded-lg border border-slate-200 p-4">
-                <h3 className="text-sm font-semibold">{status.payload?.title}</h3>
-                <table className="mt-2 w-full text-left text-sm">
-                  <tbody>
-                    {status.payload?.labels.map((label, index) => (
-                      <tr key={`${status.id}-${label}-${index}`}>
-                        <td className="py-1 text-slate-600">{label}</td>
-                        <td className="py-1 font-medium">{status.payload?.values[index]}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </article>
-            ))}
+        {/* ── Main panel ───────────────────────────────────────────────── */}
+        <section className="min-w-0 flex-1">
+          {/* Panel header */}
+          <div
+            className="mb-6 rounded-2xl p-5"
+            style={{
+              background: "linear-gradient(135deg, var(--bg-surface) 0%, #12192e 100%)",
+              border: "1px solid var(--border-subtle)",
+              boxShadow: "var(--shadow-card)",
+            }}
+          >
+            <h2 className="text-xl font-bold gradient-text">Personal Data Dashboard</h2>
+            <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
+              Widgets appear automatically when{" "}
+              <code
+                className="rounded px-1.5 py-0.5 font-mono text-xs"
+                style={{ background: "var(--bg-card)", color: "var(--accent-400)" }}
+              >
+                get_dashboard_payload()
+              </code>{" "}
+              returns valid, non-trivial data.
+            </p>
           </div>
 
+          {/* Widget grid */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {loading
+              ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
+              : unlockedWidgets.map((status) => {
+                  const vals = status.payload!.values;
+                  const maxVal = Math.max(...vals.map(Math.abs));
+                  return (
+                    <article
+                      key={status.id}
+                      className="card-complete rounded-2xl p-5 transition-transform duration-200 hover:-translate-y-0.5"
+                      style={{
+                        background: "var(--bg-card)",
+                        border: "1px solid rgba(52,211,153,0.2)",
+                        boxShadow: "var(--shadow-card)",
+                      }}
+                    >
+                      {/* Widget header */}
+                      <div className="mb-3 flex items-start justify-between gap-2">
+                        <h3 className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>
+                          {status.payload?.title}
+                        </h3>
+                        <span
+                          className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
+                          style={{ background: "var(--complete-bg)", color: "var(--complete-fg)" }}
+                        >
+                          ✓ {status.id}
+                        </span>
+                      </div>
+
+                      {/* Data rows with mini-bar */}
+                      <div className="space-y-2">
+                        {status.payload?.labels.map((label, index) => (
+                          <div key={`${status.id}-${label}-${index}`}>
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                                {label}
+                              </span>
+                              <span className="text-xs font-semibold tabular-nums" style={{ color: "var(--text-primary)" }}>
+                                {status.payload?.values[index]}
+                              </span>
+                            </div>
+                            <MiniBar value={status.payload!.values[index]} max={maxVal} />
+                          </div>
+                        ))}
+                      </div>
+                    </article>
+                  );
+                })}
+          </div>
+
+          {/* Empty state */}
           {!loading && unlockedWidgets.length === 0 && (
-            <p className="mt-5 rounded-lg border border-dashed border-slate-300 p-4 text-sm text-slate-600">
-              No widgets unlocked yet. Start with `assignments/assignment0/student_code.py`.
-            </p>
+            <div
+              className="flex flex-col items-center justify-center rounded-2xl px-6 py-16 text-center"
+              style={{
+                background: "var(--bg-surface)",
+                border: "1px dashed var(--border-accent)",
+              }}
+            >
+              <div
+                className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl text-3xl"
+                style={{ background: "var(--bg-card)", border: "1px solid var(--border-subtle)" }}
+              >
+                🔒
+              </div>
+              <p className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
+                No widgets unlocked yet
+              </p>
+              <p className="mt-2 max-w-xs text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                Start with{" "}
+                <code
+                  className="rounded px-1 py-0.5 font-mono"
+                  style={{ background: "var(--bg-card)", color: "var(--accent-400)" }}
+                >
+                  assignments/assignment0/student_code.py
+                </code>{" "}
+                and follow the INSTRUCTIONS.md in each folder.
+              </p>
+            </div>
           )}
 
-          {!loading && statuses.length > 0 && statuses.every((status) => status.complete) && (
-            <p className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
-              Final Project Integration unlocked: all widgets are now displayed.
-            </p>
+          {/* All-complete banner */}
+          {allComplete && (
+            <div
+              className="mt-4 rounded-2xl px-5 py-4 text-sm font-semibold"
+              style={{
+                background: "linear-gradient(135deg, rgba(52,211,153,0.12), rgba(99,102,241,0.12))",
+                border: "1px solid rgba(52,211,153,0.35)",
+                color: "var(--complete-fg)",
+                boxShadow: "0 0 24px rgba(52,211,153,0.15)",
+              }}
+            >
+              🎉 All widgets unlocked — Final Project Integration complete!
+            </div>
           )}
         </section>
       </main>
     </div>
   );
 }
+
