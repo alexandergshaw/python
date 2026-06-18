@@ -1,15 +1,15 @@
 # =============================================================================
-#  EXAM 1 — Test 1 Prep
+#  EXAM 1 — Test 1
 #  File: assignments/exam1/student_code.py
 # =============================================================================
 #
-#  WHAT THIS PRACTICE COVERS (Assignments 0-3)
+#  WHAT THIS TEST COVERS (Assignments 0-3)
 #  ---------------------------------------------------------------------------
 #  * Variables and types
 #  * Branching / conditionals   (if / elif / else, comparisons)
 #  * Loops                      (for item in list, the counting/summing pattern)
 #
-#  This is exam-style practice: write two short functions from the rules given,
+#  This is Test 1: write two short functions from the rules given,
 #  then make the tests pass.  Everything here uses skills from the first weeks.
 #
 #  THE SUMMING PATTERN (helpful for the second function)
@@ -32,12 +32,12 @@
 #
 #  WORKED EXAMPLE (use different data, don't copy it)
 #  ---------------------------------------------------------------------------
-#      title  = "Practice Run"
+#      title  = "My Results"
 #      labels = ["Q1", "Q2", "Q3"]
 #      values = [4, 3, 1]
 # =============================================================================
 
-"""Starter code for exam1: Test 1 Prep."""
+"""Starter code for exam1: Test 1."""
 
 # Change this to your real name.
 student_name = "Alex Shaw"
@@ -85,7 +85,7 @@ def sum_even(numbers):
 
 
 def get_dashboard_payload():
-    """Return the data for your Exam 1 prep widget.
+    """Return the data for your Test 1 widget.
 
     Put your own numbers in `values` and a matching label for each one in
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
@@ -95,7 +95,7 @@ def get_dashboard_payload():
     my_values = [4, 3, 1]
 
     return {
-        "title": "Test 1 Prep",
+        "title": "Test 1",
         "values": my_values,
         "labels": my_labels,
     }

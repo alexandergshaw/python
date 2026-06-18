@@ -1,4 +1,4 @@
-# exam1: Test 1 Prep
+# exam1: Test 1
 
 ## Starter workflow (GUI-only)
 - Edit only `student_code.py` in Codespaces.
@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Exam-style practice across assignments 0–3. Finish `classify_number(n)` (branching) and `sum_even(numbers)` (a loop), then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
+Test 1 — covers assignments 0–3. Finish `classify_number(n)` (branching) and `sum_even(numbers)` (a loop), then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
 `classify_number(-4)` → `"negative"`; `sum_even([1, 2, 3, 4])` → `6`.

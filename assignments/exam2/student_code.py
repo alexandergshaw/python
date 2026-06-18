@@ -1,11 +1,11 @@
 # =============================================================================
-#  EXAM 2 — Test 2 Prep
+#  EXAM 2 — Test 2
 #  File: assignments/exam2/student_code.py
 # =============================================================================
 #
-#  WHAT THIS PRACTICE COVERS (Assignments 4-10)
+#  WHAT THIS TEST COVERS (Assignments 4-10)
 #  ---------------------------------------------------------------------------
-#  Exam-style practice across every second-half topic, one small piece at a time:
+#  Covers every second-half topic, one small piece at a time:
 #
 #    * Functions & modularization   mean() and a function that calls it
 #    * Data structures (dict)       price_total()
@@ -20,7 +20,7 @@
 #  fill in get_dashboard_payload() with at least 3 of your own numbers.
 # =============================================================================
 
-"""Starter code for exam2: Test 2 Prep."""
+"""Starter code for exam2: Test 2."""
 
 # Change this to your real name.
 student_name = "Alex Shaw"
@@ -116,7 +116,7 @@ def count_failures(results):
 
 
 def get_dashboard_payload():
-    """Return the data for your Exam 2 prep widget.
+    """Return the data for your Test 2 widget.
 
     Put your own numbers in `values` and a matching label for each one in
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
@@ -126,7 +126,7 @@ def get_dashboard_payload():
     my_values = [8, 7, 6, 9]
 
     return {
-        "title": "Test 2 Prep",
+        "title": "Test 2",
         "values": my_values,
         "labels": my_labels,
     }

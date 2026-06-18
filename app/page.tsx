@@ -91,7 +91,7 @@ const ASSIGNMENTS: AssignmentMeta[] = [
   { id: "assignment2", title: "Conditionals, Testing", week: "Week 2" },
   { id: "assignment3", title: "Loops", week: "Week 3" },
   { id: "review1", title: "Review: Fundamentals", week: "Week 5" },
-  { id: "exam1", title: "Test 1 Prep", week: "Week 6" },
+  { id: "exam1", title: "Test 1", week: "Week 6" },
   { id: "assignment4", title: "Functions, Modularization", week: "Week 7" },
   { id: "assignment5", title: "Data Structures", week: "Week 8" },
   { id: "assignment6", title: "File I/O, Error Handling", week: "Week 9" },
@@ -100,7 +100,7 @@ const ASSIGNMENTS: AssignmentMeta[] = [
   { id: "assignment9", title: "Lambdas/Decorators", week: "Week 12" },
   { id: "assignment10", title: "CI/CD, Debugging", week: "Week 13" },
   { id: "review2", title: "Review: OOP/Advanced", week: "Week 14" },
-  { id: "exam2", title: "Test 2 Prep", week: "Week 15" },
+  { id: "exam2", title: "Test 2", week: "Week 15" },
   { id: "final", title: "Final Integration", week: "Week 16" },
 ];
 
