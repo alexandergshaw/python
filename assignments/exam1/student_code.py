@@ -40,7 +40,7 @@
 """Starter code for exam1: Test 1 Prep."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "exam1"
@@ -59,8 +59,12 @@ def classify_number(n):
         classify_number(0)   ->  "zero"
         classify_number(7)   ->  "positive"
     """
-    # TODO: write if / elif / else branches and return the right word.
-    return ""
+    if n < 0:
+        return "negative"
+    elif n == 0:
+        return "zero"
+    else:
+        return "positive"
 
 
 def sum_even(numbers):
@@ -73,8 +77,11 @@ def sum_even(numbers):
         sum_even([1, 2, 3, 4])  ->  6     (2 + 4)
         sum_even([1, 3, 5])     ->  0     (no even numbers)
     """
-    # TODO: use the summing pattern, adding only even numbers.
-    return 0
+    total = 0
+    for number in numbers:
+        if number % 2 == 0:
+            total += number
+    return total
 
 
 def get_dashboard_payload():
@@ -84,8 +91,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Q1", "Q2", "Q3"]
-    my_values = []   # e.g. [4, 3, 1]
+    my_labels = ["Q1", "Q2", "Q3"]
+    my_values = [4, 3, 1]
 
     return {
         "title": "Test 1 Prep",

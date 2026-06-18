@@ -39,7 +39,7 @@
 """Starter code for assignment6: File I/O, Error Handling."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "assignment6"
@@ -58,8 +58,13 @@ def parse_numbers(lines):
         parse_numbers(["5"])                   ->  [5]
         parse_numbers([])                      ->  []
     """
-    # TODO: loop over lines; use try/except around int(line) to skip bad lines.
-    return []
+    numbers = []
+    for line in lines:
+        try:
+            numbers.append(int(line))
+        except ValueError:
+            pass
+    return numbers
 
 
 def get_dashboard_payload():
@@ -69,8 +74,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Row 1", "Row 2", "Row 3"]
-    my_values = []   # e.g. [10, 20, 30]
+    my_labels = ["Row 1", "Row 2", "Row 3"]
+    my_values = [10, 20, 30]
 
     return {
         "title": "File I/O, Error Handling",

@@ -45,7 +45,7 @@
 """Starter code for assignment7: OOP: Classes."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "assignment7"
@@ -60,18 +60,16 @@ class Wallet:
         Store the `owner` name on the object, and start `balance` at 0.
         (Hint: self.owner = owner, and set self.balance to 0.)
         """
-        # TODO: save self.owner and set self.balance to 0.
-        pass
+        self.owner = owner
+        self.balance = 0
 
     def deposit(self, amount):
         """Add `amount` to this wallet's balance."""
-        # TODO: increase self.balance by amount.
-        pass
+        self.balance += amount
 
     def can_afford(self, price):
         """Return True if the balance is at least `price`, else False."""
-        # TODO: return whether self.balance is >= price.
-        pass
+        return self.balance >= price
 
 
 def get_dashboard_payload():
@@ -81,8 +79,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Deposit 1", "Deposit 2", "Deposit 3"]
-    my_values = []   # e.g. [50, 20, 35]
+    my_labels = ["Deposit 1", "Deposit 2", "Deposit 3"]
+    my_values = [50, 20, 35]
 
     return {
         "title": "OOP: Classes",

@@ -25,7 +25,7 @@
 """Starter code for review2: Review: OOP/Advanced."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "review2"
@@ -34,22 +34,25 @@ assignment_label = "review2"
 # ── Functions & modularization ───────────────────────────────────────────────
 def average(numbers):
     """Return the average of a list of numbers (return 0 for an empty list)."""
-    # TODO: return the sum divided by the count (or 0 if the list is empty).
-    return 0
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
 
 
 def above_average_count(numbers):
     """Count how many numbers are above the average. CALL average() to get it."""
-    # TODO: get the average by calling average(numbers), then count the numbers
-    #       that are strictly greater than it.
-    return 0
+    avg = average(numbers)
+    count = 0
+    for number in numbers:
+        if number > avg:
+            count += 1
+    return count
 
 
 # ── Data structures ──────────────────────────────────────────────────────────
 def total_items(cart):
     """Add up all the quantities (values) in a dictionary and return the total."""
-    # TODO: sum the dictionary's values (0 for an empty dict).
-    return 0
+    return sum(cart.values())
 
 
 # ── File I/O + error handling ────────────────────────────────────────────────
@@ -59,32 +62,37 @@ def parse_numbers(lines):
     Use try / except around int(line) so bad lines are skipped, not crashes.
     Example: parse_numbers(["10", "x", "20"]) -> [10, 20]
     """
-    # TODO: loop over lines; try int(line); skip on ValueError.
-    return []
+    numbers = []
+    for line in lines:
+        try:
+            numbers.append(int(line))
+        except ValueError:
+            pass
+    return numbers
 
 
 # ── Classes ──────────────────────────────────────────────────────────────────
 class Counter:
     """Counts up from zero."""
 
-    # TODO: write __init__(self) so it sets self.count to 0.
+    def __init__(self):
+        self.count = 0
 
-    # TODO: write add(self, n) so it increases self.count by n.
-    pass
+    def add(self, n):
+        self.count += n
 
 
 # ── Inheritance ──────────────────────────────────────────────────────────────
 class ResettableCounter(Counter):
     """A Counter that can also be reset back to zero."""
 
-    # TODO: write reset(self) so it sets self.count back to 0.
-    #       (You inherit __init__ and add() from Counter -- no need to rewrite.)
-    pass
+    def reset(self):
+        self.count = 0
 
 
 # ── Lambdas ──────────────────────────────────────────────────────────────────
-# TODO: replace this stub with a lambda that returns x times itself.
-square = lambda x: None
+# A lambda that returns x multiplied by itself.
+square = lambda x: x * x
 
 
 # ── Decorators (add_bonus is PROVIDED -- do not change it) ────────────────────
@@ -94,9 +102,9 @@ def add_bonus(func):
     return wrapper
 
 
-# TODO: put @add_bonus above this function, and return level * 10.
+@add_bonus
 def base_points(level):
-    return 0
+    return level * 10
 
 
 # ── Debugging ────────────────────────────────────────────────────────────────
@@ -105,7 +113,7 @@ def count_passes(results):
     passed = 0
     for result in results:
         if result:
-            passed = passed   # BUG: this never increases the count
+            passed = passed + 1
     return passed
 
 
@@ -116,8 +124,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []
-    my_values = []
+    my_labels = ["Quiz", "Project", "Midterm", "Final"]
+    my_values = [90, 94, 82, 88]
 
     return {
         "title": "Review: OOP/Advanced",

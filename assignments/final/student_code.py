@@ -29,7 +29,7 @@
 """Starter code for final: Final Project Integration."""
 
 # Make sure this is YOUR name -- it's the last time you'll change it!
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "final"
@@ -38,29 +38,38 @@ assignment_label = "final"
 # ── Branching / conditionals ─────────────────────────────────────────────────
 def grade_label(score):
     """Return "A" (90+), "B" (80-89), "C" (70-79), or "F" (below 70)."""
-    # TODO: use if / elif / else to return the right letter.
-    return ""
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    elif score >= 70:
+        return "C"
+    else:
+        return "F"
 
 
 # ── Loops ────────────────────────────────────────────────────────────────────
 def count_active_days(steps, goal):
     """Count how many values in `steps` are >= goal, using a loop."""
-    # TODO: use the counting pattern (start at 0, add 1 when steps reach goal).
-    return 0
+    count = 0
+    for day in steps:
+        if day >= goal:
+            count += 1
+    return count
 
 
 # ── Functions ────────────────────────────────────────────────────────────────
 def average(numbers):
     """Return the average of a list of numbers (0 for an empty list)."""
-    # TODO: return the sum divided by the count (or 0 if empty).
-    return 0
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
 
 
 # ── Data structures ──────────────────────────────────────────────────────────
 def total_items(cart):
     """Add up all the quantities (values) in a dictionary and return the total."""
-    # TODO: sum the dictionary's values (0 for an empty dict).
-    return 0
+    return sum(cart.values())
 
 
 # ── File I/O + error handling ────────────────────────────────────────────────
@@ -69,34 +78,38 @@ def parse_numbers(lines):
 
     Example: parse_numbers(["10", "x", "20"]) -> [10, 20]
     """
-    # TODO: loop over lines; try int(line); skip on ValueError.
-    return []
+    numbers = []
+    for line in lines:
+        try:
+            numbers.append(int(line))
+        except ValueError:
+            pass
+    return numbers
 
 
 # ── Classes ──────────────────────────────────────────────────────────────────
 class Wallet:
     """A wallet that tracks an owner and a money balance."""
 
-    # TODO: write __init__(self, owner) so it stores self.owner and sets
-    #       self.balance to 0.
+    def __init__(self, owner):
+        self.owner = owner
+        self.balance = 0
 
-    # TODO: write deposit(self, amount) so it adds amount to self.balance.
-    pass
+    def deposit(self, amount):
+        self.balance += amount
 
 
 # ── Inheritance ──────────────────────────────────────────────────────────────
 class RewardsWallet(Wallet):
     """A Wallet that also earns reward points."""
 
-    # TODO: write reward_points(self) that returns self.balance // 10
-    #       (whole reward points, one for every 10 in the balance).
-    #       You inherit __init__ and deposit() from Wallet.
-    pass
+    def reward_points(self):
+        return self.balance // 10
 
 
 # ── Lambdas ──────────────────────────────────────────────────────────────────
-# TODO: replace this stub with a lambda that returns x times itself.
-square = lambda x: None
+# A lambda that returns x multiplied by itself.
+square = lambda x: x * x
 
 
 # ── Decorators (add_bonus is PROVIDED -- do not change it) ────────────────────
@@ -106,9 +119,9 @@ def add_bonus(func):
     return wrapper
 
 
-# TODO: put @add_bonus above this function, and return level * 10.
+@add_bonus
 def base_points(level):
-    return 0
+    return level * 10
 
 
 def get_dashboard_payload():
@@ -117,8 +130,8 @@ def get_dashboard_payload():
     Make this YOUR data.  Put at least 3 of your own numbers in `values` and a
     matching label for each one in `labels`, with at least 2 numbers different.
     """
-    my_labels = []
-    my_values = []
+    my_labels = ["Savings", "Expenses", "Remaining"]
+    my_values = [1200, 830, 370]
 
     return {
         "title": "Final Project Integration",

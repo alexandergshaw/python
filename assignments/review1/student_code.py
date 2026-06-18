@@ -35,7 +35,7 @@
 """Starter code for review1: Review: Fundamentals."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "review1"
@@ -56,8 +56,14 @@ def grade_label(score):
         grade_label(73)  ->  "C"
         grade_label(50)  ->  "F"
     """
-    # TODO: write if / elif / else branches and return the letter grade.
-    return ""
+    if score >= 90:
+        return "A"
+    elif score >= 80:
+        return "B"
+    elif score >= 70:
+        return "C"
+    else:
+        return "F"
 
 
 def count_passing(scores, passing):
@@ -70,8 +76,11 @@ def count_passing(scores, passing):
         count_passing([55, 70, 90], 70)  ->  2
         count_passing([10, 20], 50)       ->  0
     """
-    # TODO: use the counting pattern (start at 0, loop, add 1 when score >= passing).
-    return 0
+    count = 0
+    for score in scores:
+        if score >= passing:
+            count += 1
+    return count
 
 
 def get_dashboard_payload():
@@ -81,8 +90,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Quiz 1", "Quiz 2", "Quiz 3"]
-    my_values = []   # e.g. [88, 92, 74]
+    my_labels = ["Quiz 1", "Quiz 2", "Quiz 3"]
+    my_values = [88, 92, 74]
 
     return {
         "title": "Review: Fundamentals",

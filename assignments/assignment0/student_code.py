@@ -55,7 +55,7 @@
 """Starter code for assignment0: Setup, Git, Vercel."""
 
 # Change "Your Name" to your real name (keep the quotes).
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is -- it tells the dashboard which slot to fill.
 assignment_label = "assignment0"
@@ -71,9 +71,6 @@ def get_dashboard_payload():
         # A short heading describing your data.
         "title": "My First Widget",
 
-        # TODO: put at least 3 numbers here, e.g. [10, 25, 40]
-        "values": [],
-
-        # TODO: put one short label per number here, e.g. ["Mon", "Tue", "Wed"]
-        "labels": [],
+        "values": [12, 34, 8, 20],
+        "labels": ["Red", "Blue", "Green", "Yellow"],
     }

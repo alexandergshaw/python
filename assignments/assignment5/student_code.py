@@ -43,7 +43,7 @@
 """Starter code for assignment5: Data Structures."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "assignment5"
@@ -60,8 +60,7 @@ def total_items(cart):
         total_items({"apples": 2, "milk": 3})  ->  5
         total_items({})                         ->  0
     """
-    # TODO: add up the dictionary's values and return the total.
-    return 0
+    return sum(cart.values())
 
 
 def item_names(cart):
@@ -71,8 +70,7 @@ def item_names(cart):
         item_names({"milk": 1, "apples": 2})  ->  ["apples", "milk"]
         item_names({})                          ->  []
     """
-    # TODO: return the dictionary's keys as a sorted list.
-    return []
+    return sorted(cart.keys())
 
 
 def get_dashboard_payload():
@@ -82,8 +80,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Apples", "Milk", "Eggs"]
-    my_values = []   # e.g. [4, 1, 12]
+    my_labels = ["Apples", "Milk", "Eggs"]
+    my_values = [4, 1, 12]
 
     return {
         "title": "Data Structures",

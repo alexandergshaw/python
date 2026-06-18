@@ -23,7 +23,7 @@
 """Starter code for exam2: Test 2 Prep."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "exam2"
@@ -32,22 +32,25 @@ assignment_label = "exam2"
 # ── Functions & modularization ───────────────────────────────────────────────
 def mean(numbers):
     """Return the average of a list of numbers (return 0 for an empty list)."""
-    # TODO: return the sum divided by the count (or 0 if the list is empty).
-    return 0
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
 
 
 def below_average_count(numbers):
     """Count how many numbers are below the average. CALL mean() to get it."""
-    # TODO: get the average by calling mean(numbers), then count the numbers
-    #       that are strictly less than it.
-    return 0
+    m = mean(numbers)
+    count = 0
+    for number in numbers:
+        if number < m:
+            count += 1
+    return count
 
 
 # ── Data structures ──────────────────────────────────────────────────────────
 def price_total(prices):
     """Add up all the values in a dictionary of prices and return the total."""
-    # TODO: sum the dictionary's values (0 for an empty dict).
-    return 0
+    return sum(prices.values())
 
 
 # ── File I/O + error handling ────────────────────────────────────────────────
@@ -57,32 +60,37 @@ def parse_floats(lines):
     Use try / except around float(line) so bad lines are skipped.
     Example: parse_floats(["1.5", "oops", "2.0"]) -> [1.5, 2.0]
     """
-    # TODO: loop over lines; try float(line); skip on ValueError.
-    return []
+    numbers = []
+    for line in lines:
+        try:
+            numbers.append(float(line))
+        except ValueError:
+            pass
+    return numbers
 
 
 # ── Classes ──────────────────────────────────────────────────────────────────
 class Tally:
     """Keeps a running tally starting at zero."""
 
-    # TODO: write __init__(self) so it sets self.count to 0.
+    def __init__(self):
+        self.count = 0
 
-    # TODO: write bump(self) so it increases self.count by 1.
-    pass
+    def bump(self):
+        self.count += 1
 
 
 # ── Inheritance ──────────────────────────────────────────────────────────────
 class ResettableTally(Tally):
     """A Tally that can also be reset back to zero."""
 
-    # TODO: write reset(self) so it sets self.count back to 0.
-    #       (You inherit __init__ and bump() from Tally.)
-    pass
+    def reset(self):
+        self.count = 0
 
 
 # ── Lambdas ──────────────────────────────────────────────────────────────────
-# TODO: replace this stub with a lambda that returns x times x times x (x cubed).
-cube = lambda x: None
+# A lambda that returns x cubed (x times x times x).
+cube = lambda x: x * x * x
 
 
 # ── Decorators (add_bonus is PROVIDED -- do not change it) ────────────────────
@@ -92,9 +100,9 @@ def add_bonus(func):
     return wrapper
 
 
-# TODO: put @add_bonus above this function, and return level * 10.
+@add_bonus
 def base_points(level):
-    return 0
+    return level * 10
 
 
 # ── Debugging ────────────────────────────────────────────────────────────────
@@ -103,7 +111,7 @@ def count_failures(results):
     failed = 0
     for result in results:
         if not result:
-            failed = failed   # BUG: this never increases the count
+            failed = failed + 1
     return failed
 
 
@@ -114,8 +122,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []
-    my_values = []
+    my_labels = ["Functions", "OOP", "Lambdas", "File I/O"]
+    my_values = [8, 7, 6, 9]
 
     return {
         "title": "Test 2 Prep",

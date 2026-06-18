@@ -44,7 +44,7 @@
 """Starter code for assignment1: Variables, I/O, Branching."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "assignment1"
@@ -65,8 +65,12 @@ def temperature_label(temp):
 
     Replace the line below with your own if / elif / else branches.
     """
-    # TODO: write your branches here and return "cold", "warm", or "hot".
-    return ""
+    if temp < 60:
+        return "cold"
+    elif temp < 80:
+        return "warm"
+    else:
+        return "hot"
 
 
 def get_dashboard_payload():
@@ -76,8 +80,8 @@ def get_dashboard_payload():
     in `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Mon", "Tue", "Wed"]
-    my_values = []   # e.g. [68, 71, 75]
+    my_labels = ["Mon", "Tue", "Wed", "Thu"]
+    my_values = [68, 71, 75, 70]
 
     return {
         "title": "Variables, I/O, Branching",

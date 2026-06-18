@@ -42,15 +42,14 @@
 """Starter code for assignment9: Lambdas/Decorators."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "assignment9"
 
 
-# TODO 1: replace this stub with a lambda that returns x times itself.
-#         Example shape:  square = lambda x: ...
-square = lambda x: None
+# A lambda that returns x multiplied by itself.
+square = lambda x: x * x
 
 
 # ---------------------------------------------------------------------------
@@ -63,11 +62,9 @@ def add_bonus(func):
     return wrapper
 
 
-# TODO 2: put @add_bonus on the line directly above this function, and make it
-#         return level * 10.
+@add_bonus
 def base_points(level):
-    # TODO: return the level multiplied by 10.
-    return 0
+    return level * 10
 
 
 def get_dashboard_payload():
@@ -77,8 +74,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Level 1", "Level 2", "Level 3"]
-    my_values = []   # e.g. [15, 25, 35]
+    my_labels = ["Level 1", "Level 2", "Level 3"]
+    my_values = [15, 25, 35]
 
     return {
         "title": "Lambdas/Decorators",

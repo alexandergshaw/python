@@ -44,7 +44,7 @@
 """Starter code for assignment4: Functions, Modularization."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "assignment4"
@@ -61,8 +61,9 @@ def average(numbers):
         average([10])       ->  10.0
         average([])         ->  0
     """
-    # TODO: handle the empty list, then return the sum divided by the count.
-    return 0
+    if not numbers:
+        return 0
+    return sum(numbers) / len(numbers)
 
 
 def above_average_count(numbers):
@@ -76,8 +77,12 @@ def above_average_count(numbers):
         above_average_count([10, 10, 10])   ->  0     (none are above 10.0)
         above_average_count([1, 2, 3, 4])   ->  2     (3 and 4 are above 2.5)
     """
-    # TODO: call average(numbers), then count numbers greater than it.
-    return 0
+    avg = average(numbers)
+    count = 0
+    for number in numbers:
+        if number > avg:
+            count += 1
+    return count
 
 
 def get_dashboard_payload():
@@ -87,8 +92,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Mon", "Tue", "Wed"]
-    my_values = []   # e.g. [12, 8, 19]
+    my_labels = ["Mon", "Tue", "Wed"]
+    my_values = [12, 8, 19]
 
     return {
         "title": "Functions, Modularization",

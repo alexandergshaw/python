@@ -33,7 +33,7 @@
 """Starter code for assignment10: CI/CD, Debugging."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "assignment10"
@@ -56,7 +56,7 @@ def count_passes(results):
     passed = 0
     for result in results:
         if result:
-            passed = passed   # BUG: this never actually increases the count
+            passed = passed + 1
     return passed
 
 
@@ -67,8 +67,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Passed", "Failed", "Retries"]
-    my_values = []   # e.g. [8, 2, 3]
+    my_labels = ["Passed", "Failed", "Retries"]
+    my_values = [8, 2, 3]
 
     return {
         "title": "CI/CD, Debugging",

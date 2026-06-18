@@ -49,7 +49,7 @@
 """Starter code for assignment8: Advanced OOP."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "assignment8"
@@ -74,11 +74,11 @@ class Account:
 class SavingsAccount(Account):
     """A savings account: inherits from Account, adds interest."""
 
-    # TODO 1: override kind() so it returns "savings".
+    def kind(self):
+        return "savings"
 
-    # TODO 2: add add_interest(self, rate) that increases self.balance by
-    #         self.balance * rate.
-    pass
+    def add_interest(self, rate):
+        self.balance += self.balance * rate
 
 
 def get_dashboard_payload():
@@ -88,8 +88,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Checking", "Savings", "Bonus"]
-    my_values = []   # e.g. [100, 110, 25]
+    my_labels = ["Checking", "Savings", "Bonus"]
+    my_values = [100, 110, 25]
 
     return {
         "title": "Advanced OOP",

@@ -39,7 +39,7 @@
 """Starter code for assignment2: Conditionals, Testing."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "assignment2"
@@ -61,8 +61,12 @@ def budget_status(spent, limit):
     Replace the line below with if / elif / else branches that compare
     `spent` and `limit`.
     """
-    # TODO: compare spent and limit, then return "under", "over", or "exact".
-    return ""
+    if spent < limit:
+        return "under"
+    elif spent > limit:
+        return "over"
+    else:
+        return "exact"
 
 
 def get_dashboard_payload():
@@ -72,8 +76,8 @@ def get_dashboard_payload():
     `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Food", "Transit", "Fun"]
-    my_values = []   # e.g. [42, 18, 25]
+    my_labels = ["Food", "Transit", "Fun"]
+    my_values = [42, 18, 25]
 
     return {
         "title": "Conditionals, Testing",

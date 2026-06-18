@@ -42,7 +42,7 @@
 """Starter code for assignment3: Loops."""
 
 # Change this to your real name.
-student_name = "Your Name"
+student_name = "Alex Shaw"
 
 # Leave this exactly as-is.
 assignment_label = "assignment3"
@@ -62,8 +62,11 @@ def count_active_days(steps, goal):
 
     Use the counting pattern: start at 0, loop, add 1 when a day reaches goal.
     """
-    # TODO: count the days whose value is >= goal, then return the count.
-    return 0
+    count = 0
+    for day in steps:
+        if day >= goal:
+            count += 1
+    return count
 
 
 def get_dashboard_payload():
@@ -73,8 +76,8 @@ def get_dashboard_payload():
     in `labels`.  Keep at least 3 items in each list, with at least 2 of the
     numbers different from one another.
     """
-    my_labels = []   # e.g. ["Mon", "Tue", "Wed", "Thu"]
-    my_values = []   # e.g. [4200, 7000, 8100, 10020]
+    my_labels = ["Mon", "Tue", "Wed", "Thu"]
+    my_values = [4200, 7000, 8100, 10020]
 
     return {
         "title": "Loops",
