@@ -494,9 +494,10 @@ export default function Home() {
             {loading
               ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
               : unlockedWidgets.map((status) => {
-                  const maxVal = status.payload
-                    ? Math.max(...status.payload.values.map(Math.abs))
-                    : 0;
+                  // Capture in a local const so TS keeps the non-null narrowing
+                  // inside the .map() callback below.
+                  const payload = status.payload;
+                  const maxVal = payload ? Math.max(...payload.values.map(Math.abs)) : 0;
                   return (
                     <article
                       key={status.id}
@@ -510,7 +511,7 @@ export default function Home() {
                       {/* Widget header */}
                       <div className="mb-3 flex items-start justify-between gap-2">
                         <h3 className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>
-                          {status.payload?.title ?? status.title}
+                          {payload?.title ?? status.title}
                         </h3>
                         <span
                           className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
@@ -520,20 +521,20 @@ export default function Home() {
                         </span>
                       </div>
 
-                      {status.payload ? (
+                      {payload ? (
                         /* Data rows with mini-bar */
                         <div className="space-y-2">
-                          {status.payload.labels.map((label, index) => (
+                          {payload.labels.map((label, index) => (
                             <div key={`${status.id}-${label}-${index}`}>
                               <div className="flex items-center justify-between">
                                 <span className="text-xs" style={{ color: "var(--text-secondary)" }}>
                                   {label}
                                 </span>
                                 <span className="text-xs font-semibold tabular-nums" style={{ color: "var(--text-primary)" }}>
-                                  {status.payload.values[index]}
+                                  {payload.values[index]}
                                 </span>
                               </div>
-                              <MiniBar value={status.payload.values[index]} max={maxVal} />
+                              <MiniBar value={payload.values[index]} max={maxVal} />
                             </div>
                           ))}
                         </div>
