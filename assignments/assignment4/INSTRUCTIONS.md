@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `function splitter` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Finish `average(numbers)` and `above_average_count(numbers)` (which calls `average`), then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: expenses = [12.5, 8.25, 19.0].
+`average([2, 4, 6])` → `4`; `above_average_count([2, 4, 6])` → `1` (only 6 is above the average).

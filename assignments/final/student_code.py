@@ -3,125 +3,125 @@
 #  File: assignments/final/student_code.py
 # =============================================================================
 #
-#  CONGRATULATIONS — YOU MADE IT TO THE FINAL!
-#  ─────────────────────────────────────────────────────────────────────────────
-#  This is the capstone assignment for the entire course.  Everything you've
-#  learned over 16 weeks comes together here: variables, branching, loops,
-#  functions, data structures, file I/O, error handling, OOP, lambdas,
-#  decorators, and CI/CD.
+#  CONGRATULATIONS -- YOU MADE IT TO THE FINAL!
+#  ---------------------------------------------------------------------------
+#  This capstone touches a little of EVERYTHING from the whole course.  Each
+#  piece is small and familiar -- you've done every one of these before.  Work
+#  top to bottom, run the tests as you go, and finish by filling in your own
+#  dashboard data.
 #
-#  WHAT YOUR FINAL PROJECT SHOULD DEMONSTRATE
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Your get_dashboard_payload() should be the most complete, well-organized,
-#  and meaningful Python function you've written.  Aim to include:
+#  WHAT YOU'LL PRACTICE (one small piece each)
+#  ---------------------------------------------------------------------------
+#    * Branching / conditionals    grade_label()
+#    * Loops                        count_active_days()
+#    * Functions                    average()
+#    * Data structures (dict)       total_items()
+#    * File I/O + error handling     parse_numbers()  with try/except
+#    * Classes                       the Wallet class
+#    * Inheritance                   RewardsWallet(Wallet)
+#    * Lambdas                       the `square` lambda
+#    * Decorators                    base_points() with @add_bonus
 #
-#    ✓ At least one class with __init__, attributes, and methods
-#    ✓ Inheritance or polymorphism (if applicable to your data)
-#    ✓ A function (or several) defined above get_dashboard_payload
-#    ✓ A loop that computes something interesting
-#    ✓ At least one conditional
-#    ✓ A lambda used with map(), filter(), or sorted()
-#    ✓ Error handling around any parsing or risky operation
-#    ✓ Meaningful, descriptive variable names throughout
-#    ✓ At least one docstring per class and function you define
-#
-#  DESIGN YOUR OWN DATA
-#  ─────────────────────────────────────────────────────────────────────────────
-#  The whole point of this dashboard is that it shows YOUR data — not made-up
-#  placeholder values.  Think about something real you'd like to visualize:
-#
-#    📊 Your weekly study hours across different subjects
-#    💰 Monthly budget categories and how much you spent in each
-#    🏃 Fitness stats: distance run, calories burned, rest days
-#    📚 Book ratings you've given to books you've read this year
-#    🎮 High scores across your favorite games
-#    🌡️  Weather data from your city over the past month
-#    ☕ Coffee shops you've visited, rated 1–10
-#
-#  ...the more personal and real, the more impressive your final widget!
-#
-#  HOW THE WIDGET UNLOCKS
-#  ─────────────────────────────────────────────────────────────────────────────
-#  The dashboard engine runs your code automatically and checks that
-#  get_dashboard_payload() returns a valid dict with:
-#    • "title"  — a non-empty string
-#    • "values" — a list of at LEAST 3 numbers, with at least 2 distinct values
-#    • "labels" — a list of non-empty strings, same length as "values"
-#
-#  If all 16 assignments are complete, a special celebration banner appears.
-#
-#  FINAL CHECKLIST
-#  ─────────────────────────────────────────────────────────────────────────────
-#  □  student_name is changed to your real name
-#  □  get_dashboard_payload() returns valid, non-trivial data
-#  □  All tests pass in the Testing panel (beaker icon)
-#  □  GitHub Actions checks are green on your pull request
-#  □  You have at least one class, one function, one loop, one conditional
-#  □  You have docstrings on every function and class you wrote
-#  □  Your data is meaningful and describes something real to you
-#  □  You merged the PR and the live Vercel dashboard shows your widget
-#
-#  WORKED EXAMPLE (use completely different data — this is YOUR final project!)
-#  ─────────────────────────────────────────────────────────────────────────────
-#  widget_data = [
-#      {"label": "Savings",   "value": 1200},
-#      {"label": "Expenses",  "value":  830},
-#      {"label": "Remaining", "value":  370},
-#  ]
-#  → values: [d["value"] for d in widget_data]   # [1200, 830, 370]
-#  → labels: [d["label"] for d in widget_data]   # ["Savings", "Expenses", ...]
+#  Then make get_dashboard_payload() show off YOUR data -- something real you'd
+#  like to visualize (study hours, budget, fitness, game scores, anything).
 # =============================================================================
 
 """Starter code for final: Final Project Integration."""
 
-# ── Identity variables ────────────────────────────────────────────────────────
-# Make sure this is YOUR name — it's the last time you'll change it!
+# Make sure this is YOUR name -- it's the last time you'll change it!
 student_name = "Your Name"
 
-# DO NOT change this.
+# Leave this exactly as-is.
 assignment_label = "final"
 
 
-# =============================================================================
-#  WRITE YOUR CLASSES AND HELPER FUNCTIONS HERE
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Organize your code well:
-#    1. Classes first (with docstrings and __init__)
-#    2. Helper functions below the classes (with docstrings)
-#    3. get_dashboard_payload() last — it calls everything above
-#
-#  The cleaner and more organized this file is, the better you'll do!
-# =============================================================================
+# ── Branching / conditionals ─────────────────────────────────────────────────
+def grade_label(score):
+    """Return "A" (90+), "B" (80-89), "C" (70-79), or "F" (below 70)."""
+    # TODO: use if / elif / else to return the right letter.
+    return ""
 
 
-# ── Dashboard function ────────────────────────────────────────────────────────
-def get_dashboard_payload():
-    """Return dashboard-ready data for the Final Project widget.
+# ── Loops ────────────────────────────────────────────────────────────────────
+def count_active_days(steps, goal):
+    """Count how many values in `steps` are >= goal, using a loop."""
+    # TODO: use the counting pattern (start at 0, add 1 when steps reach goal).
+    return 0
 
-    This is your masterpiece.  Use everything you've learned:
-      - Classes and OOP
-      - Functions (your helpers above)
-      - Loops and conditionals
-      - Lambda expressions
-      - Error handling
-      - Meaningful, real data you care about
 
-    The widget on the live dashboard will show YOUR title and YOUR data.
-    Make it something you're proud of!
+# ── Functions ────────────────────────────────────────────────────────────────
+def average(numbers):
+    """Return the average of a list of numbers (0 for an empty list)."""
+    # TODO: return the sum divided by the count (or 0 if empty).
+    return 0
+
+
+# ── Data structures ──────────────────────────────────────────────────────────
+def total_items(cart):
+    """Add up all the quantities (values) in a dictionary and return the total."""
+    # TODO: sum the dictionary's values (0 for an empty dict).
+    return 0
+
+
+# ── File I/O + error handling ────────────────────────────────────────────────
+def parse_numbers(lines):
+    """Convert a list of text lines into ints, skipping non-numbers (try/except).
+
+    Example: parse_numbers(["10", "x", "20"]) -> [10, 20]
     """
-    # ── Your final project data and logic ─────────────────────────────────
-    # Write your full implementation here, using all your skills.
-    # Start simple — get it working first, then make it more sophisticated.
+    # TODO: loop over lines; try int(line); skip on ValueError.
+    return []
 
-    my_values = []   # at least 3 meaningful numbers from your data
-    my_labels = []   # descriptive label for each number
+
+# ── Classes ──────────────────────────────────────────────────────────────────
+class Wallet:
+    """A wallet that tracks an owner and a money balance."""
+
+    # TODO: write __init__(self, owner) so it stores self.owner and sets
+    #       self.balance to 0.
+
+    # TODO: write deposit(self, amount) so it adds amount to self.balance.
+    pass
+
+
+# ── Inheritance ──────────────────────────────────────────────────────────────
+class RewardsWallet(Wallet):
+    """A Wallet that also earns reward points."""
+
+    # TODO: write reward_points(self) that returns self.balance // 10
+    #       (whole reward points, one for every 10 in the balance).
+    #       You inherit __init__ and deposit() from Wallet.
+    pass
+
+
+# ── Lambdas ──────────────────────────────────────────────────────────────────
+# TODO: replace this stub with a lambda that returns x times itself.
+square = lambda x: None
+
+
+# ── Decorators (add_bonus is PROVIDED -- do not change it) ────────────────────
+def add_bonus(func):
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs) + 5
+    return wrapper
+
+
+# TODO: put @add_bonus above this function, and return level * 10.
+def base_points(level):
+    return 0
+
+
+def get_dashboard_payload():
+    """Return the data for your Final Project widget.
+
+    Make this YOUR data.  Put at least 3 of your own numbers in `values` and a
+    matching label for each one in `labels`, with at least 2 numbers different.
+    """
+    my_labels = []
+    my_values = []
 
     return {
-        # Give your final widget a great title — something that describes
-        # YOUR data and makes the dashboard feel personal.
         "title": "Final Project Integration",
-
         "values": my_values,
         "labels": my_labels,
     }
-

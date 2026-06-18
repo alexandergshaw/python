@@ -4,111 +4,80 @@
 # =============================================================================
 #
 #  WHAT YOU'RE LEARNING THIS WEEK
-#  ─────────────────────────────────────────────────────────────────────────────
-#  LOOPS — Run the same block of code multiple times without repeating yourself.
+#  ---------------------------------------------------------------------------
+#  A LOOP runs the same block of code once for each item in a list.  The most
+#  common kind is the `for` loop:
 #
-#  ── for loops ────────────────────────────────────────────────────────────────
-#  A `for` loop iterates over every item in a sequence (like a list) one at
-#  a time, automatically stopping when it runs out of items.
+#      steps = [4200, 7000, 8100]
+#      for day in steps:          # `day` becomes 4200, then 7000, then 8100
+#          print(day)
 #
-#      fruits = ["apple", "banana", "cherry"]
-#      for fruit in fruits:
-#          print(fruit)         # prints "apple", then "banana", then "cherry"
+#  THE COUNTING PATTERN (you'll use this today)
+#  ---------------------------------------------------------------------------
+#  Start a counter at 0 BEFORE the loop, then add 1 inside the loop whenever
+#  something is true:
 #
-#  Use range() when you want to loop a specific number of times:
-#      for i in range(5):       # i takes values 0, 1, 2, 3, 4
-#          print(i)
+#      total = 0
+#      for number in [3, 9, 1, 8]:
+#          if number > 5:
+#              total = total + 1     # only counts the big ones
+#      # total is now 2  (9 and 8)
 #
-#      for i in range(1, 6):   # i takes values 1, 2, 3, 4, 5
-#          print(i)
+#  YOUR TASK (two small things)
+#  ---------------------------------------------------------------------------
+#  1. Finish `count_active_days(steps, goal)` so it loops through a list of
+#     daily step counts and returns HOW MANY days reached the goal.  The exact
+#     rule is written in the function below.
 #
-#  ── while loops ──────────────────────────────────────────────────────────────
-#  A `while` loop keeps running as long as a condition is True.  Use it when
-#  you don't know ahead of time how many iterations you need.
+#  2. Fill in `get_dashboard_payload()` with at least 3 of your own daily
+#     numbers and matching labels.
 #
-#      count = 0
-#      while count < 3:
-#          print("looping!")
-#          count += 1           # count = count + 1  (shorthand for incrementing)
-#
-#  ⚠️  DANGER: If the condition never becomes False, you get an infinite loop!
-#     Always make sure something inside the loop eventually makes it stop.
-#
-#  ── Accumulator pattern ──────────────────────────────────────────────────────
-#  The most common loop pattern is accumulation: start with a "running total"
-#  set to 0, then add each item to it inside the loop.
-#
-#      steps = [4200, 7000, 8100, 10020]
-#      total = 0                   # start at zero
-#      for s in steps:
-#          total += s              # add each day's steps to the running total
-#      average = total / len(steps)   # len() returns the number of items
-#      print(average)             # 7330.0
-#
-#  ── Useful built-in functions for lists ──────────────────────────────────────
-#      len(my_list)    → number of items (length)
-#      sum(my_list)    → sum of all numbers
-#      min(my_list)    → smallest number
-#      max(my_list)    → largest number
-#
-#  YOUR TASK: Build a "habit streaks" widget.
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Track a habit you perform daily (steps, push-ups, pages read, glasses of
-#  water — anything works).  Store several days of data in a list.  Use a loop
-#  to compute summary statistics (total, average, max, etc.).  Return those
-#  stats as your widget data.
-#
-#  WORKED EXAMPLE (use different data!):
-#      steps = [4200, 7000, 8100, 10020]
-#      → compute: total, average, best day
-#      → values: [29320, 7330, 10020]
-#      → labels: ["Total Steps", "Daily Avg", "Best Day"]
+#  WORKED EXAMPLE (use different data, don't copy it)
+#  ---------------------------------------------------------------------------
+#      title  = "Steps This Week"
+#      labels = ["Mon", "Tue", "Wed", "Thu"]
+#      values = [4200, 7000, 8100, 10020]
 # =============================================================================
 
 """Starter code for assignment3: Loops."""
 
-# ── Identity variables ────────────────────────────────────────────────────────
+# Change this to your real name.
 student_name = "Your Name"
+
+# Leave this exactly as-is.
 assignment_label = "assignment3"
 
 
-# ── Dashboard function ────────────────────────────────────────────────────────
-def get_dashboard_payload():
-    """Return dashboard-ready data for the Assignment 3 widget.
+def count_active_days(steps, goal):
+    """Count how many days reached the step goal.
 
-    Your job:
-      1. Define a list of daily measurements (steps, scores, anything numeric).
-      2. Use a for loop (or while loop) to compute statistics like total,
-         average, minimum, or maximum.
-      3. Store those computed values in labels/values lists.
-      4. Return them in the dictionary.
+    `steps` is a list of numbers (one per day).  `goal` is a single number.
+    Loop through `steps` and count how many are GREATER THAN OR EQUAL TO `goal`.
+    Return that count (a whole number).
 
-    Hint — computing an average:
-        total = 0
-        for value in my_data:
-            total += value
-        average = total / len(my_data)
+    Examples (these are what the tests expect):
+        count_active_days([1000, 5000, 8000], 4000)  ->  2
+        count_active_days([1, 2, 3], 10)             ->  0
+        count_active_days([10, 10], 5)               ->  2
 
-    Or use Python's built-in sum():
-        average = sum(my_data) / len(my_data)
+    Use the counting pattern: start at 0, loop, add 1 when a day reaches goal.
     """
-    # ── Your raw daily data ────────────────────────────────────────────────
-    # Replace this with your own list of numbers.
-    # daily_data = [4200, 7000, 8100, 10020, 6500]
+    # TODO: count the days whose value is >= goal, then return the count.
+    return 0
 
-    # ── Use a loop to compute statistics ──────────────────────────────────
-    # Example:
-    #   total   = sum(daily_data)
-    #   average = total / len(daily_data)
-    #   best    = max(daily_data)
 
-    # ── Return your computed stats ─────────────────────────────────────────
-    my_values = []   # e.g., [total, average, best]
-    my_labels = []   # e.g., ["Total", "Average", "Best Day"]
+def get_dashboard_payload():
+    """Return the data for your Assignment 3 widget.
+
+    Put your own daily numbers in `values` and a matching label for each one
+    in `labels`.  Keep at least 3 items in each list, with at least 2 of the
+    numbers different from one another.
+    """
+    my_labels = []   # e.g. ["Mon", "Tue", "Wed", "Thu"]
+    my_values = []   # e.g. [4200, 7000, 8100, 10020]
 
     return {
         "title": "Loops",
         "values": my_values,
         "labels": my_labels,
     }
-

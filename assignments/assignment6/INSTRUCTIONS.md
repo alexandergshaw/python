@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `csv guardrails` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Finish `parse_numbers(lines)` so it converts text lines to ints and uses try / except to skip the ones that aren't numbers, then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: lines = ["name,amount", "Ana,23", "Bo,19"].
+`parse_numbers(["10", "x", "20"])` → `[10, 20]` (the `"x"` line is skipped).

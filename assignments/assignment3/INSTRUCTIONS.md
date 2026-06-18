@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `habit streaks` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Finish `count_active_days(steps, goal)` using a loop, and fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: steps = [4200, 7000, 8100, 10020].
+`count_active_days([1000, 5000, 8000], 4000)` → `2` (two days reached the goal).

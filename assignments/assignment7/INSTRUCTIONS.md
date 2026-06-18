@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `expense model` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Finish the `Wallet` class (`__init__`, `deposit`, `can_afford`), then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: transactions = [("Food", 14.2), ("Books", 22.0)].
+A new `Wallet("Sam")` starts with `balance` `0`; after `deposit(50)`, `can_afford(40)` → `True` and `can_afford(60)` → `False`.

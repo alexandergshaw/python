@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `budget checker` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Finish `budget_status(spent, limit)` so it returns `"under"`, `"over"`, or `"exact"`, and fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: purchase_total = 42.50, budget_limit = 60.00.
+`budget_status(40, 60)` → `"under"`, `budget_status(75, 60)` → `"over"`, `budget_status(60, 60)` → `"exact"`.

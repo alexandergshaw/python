@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `exam practice 1` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Exam-style practice across assignments 0–3. Finish `classify_number(n)` (branching) and `sum_even(numbers)` (a loop), then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: practice_answers = [True, False, True, True].
+`classify_number(-4)` → `"negative"`; `sum_even([1, 2, 3, 4])` → `6`.

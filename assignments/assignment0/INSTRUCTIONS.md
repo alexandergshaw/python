@@ -25,8 +25,8 @@ Change the starter variable in `student_code.py`, run tests from the Testing pan
 12. Create the PR and click **Merge pull request**.
 
 ## Worked examples (use different data)
-- Example A: `student_name = "Maya"`, `favorite_color = "teal"`
-- Example B: `student_name = "Noah"`, `favorite_color = "orange"`
+- Example A: `student_name = "Maya"`, with values `[12, 34, 8]` and labels `["Red", "Blue", "Green"]`
+- Example B: `student_name = "Noah"`, with values `[5, 9, 7, 4]` and labels `["Mon", "Tue", "Wed", "Thu"]`
 
 ## What to submit
 - A merged pull request showing your `student_code.py` change.

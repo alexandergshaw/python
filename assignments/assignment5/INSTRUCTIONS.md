@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `shopping map` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Finish `total_items(cart)` and `item_names(cart)` over a dictionary, then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: groceries = {"apples": 4, "milk": 1}.
+`total_items({"apples": 2, "milk": 3})` → `5`; `item_names({"milk": 1, "apples": 2})` → `["apples", "milk"]`.

@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `daily summary` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Finish `temperature_label(temp)` using if / elif / else, and fill `get_dashboard_payload()` with your own non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: temperatures = [68, 71, 75], city = "Austin".
+`temperature_label(45)` → `"cold"`, `temperature_label(72)` → `"warm"`, `temperature_label(95)` → `"hot"`.

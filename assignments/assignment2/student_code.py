@@ -4,108 +4,79 @@
 # =============================================================================
 #
 #  WHAT YOU'RE LEARNING THIS WEEK
-#  ─────────────────────────────────────────────────────────────────────────────
-#  CONDITIONALS (if / elif / else)
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Conditionals let your program choose different paths depending on whether
-#  something is True or False.  You already saw them in Assignment 1 — now
-#  you'll use them more deliberately to build a "budget checker."
+#  ---------------------------------------------------------------------------
+#  * CONDITIONALS -- comparing two values to get a True/False answer, then
+#    acting on it.  The comparison operators are:
 #
-#  Comparison operators (these produce True or False):
-#      ==   equal to                  (5 == 5  → True)
-#      !=   not equal to              (5 != 3  → True)
-#      >    greater than              (10 > 7  → True)
-#      <    less than                 (3 < 10  → True)
-#      >=   greater than or equal to  (5 >= 5  → True)
-#      <=   less than or equal to     (4 <= 5  → True)
+#        a == b   "a equals b"          a != b   "a is not equal to b"
+#        a <  b   "a is less than b"    a >  b   "a is greater than b"
+#        a <= b   "a is less than or equal to b"
+#        a >= b   "a is greater than or equal to b"
 #
-#  Logical operators (combine conditions):
-#      and  — both must be True       (x > 0 and x < 100)
-#      or   — at least one must be True  (color == "red" or color == "blue")
-#      not  — flips True to False     (not is_raining)
+#    Notice the difference: a single = ASSIGNS a value, while a double ==
+#    COMPARES two values.  Comparisons are what you put after `if` / `elif`.
 #
-#  Example:
-#      purchase = 45.00
-#      budget   = 60.00
+#  * TESTING -- this course gives you a test_assignment.py file full of small
+#    checks.  Run it from the Testing panel.  Each check tells you exactly what
+#    your code should do.  "Make the tests pass" is the whole game.
 #
-#      if purchase > budget:
-#          status = "Over budget!"
-#      elif purchase == budget:
-#          status = "Exactly on budget."
-#      else:
-#          status = "Within budget."
+#  YOUR TASK (two small things)
+#  ---------------------------------------------------------------------------
+#  1. Finish `budget_status(spent, limit)` so it compares how much was spent
+#     against a spending limit and returns one of three words.  The rules are
+#     written in the function below.
 #
-#  TESTING
-#  ─────────────────────────────────────────────────────────────────────────────
-#  This week you'll also learn what "automated tests" are.  A test is code that
-#  checks whether YOUR code works correctly.  In this project, tests live in
-#  `test_assignment.py` in the same folder.
+#  2. Fill in `get_dashboard_payload()` with at least 3 of your own numbers
+#     (for example, what you spent in a few categories) and matching labels.
 #
-#  How to run tests (GUI only — no terminal):
-#    1. Open the Testing panel (beaker icon ⚗️ in the left sidebar).
-#    2. Click "Run All Tests."
-#    3. Green ✓ = passed.  Red ✗ = failed (read the message to see why).
-#
-#  You don't need to write tests yourself yet — just make sure your code passes
-#  the existing ones.
-#
-#  YOUR TASK: Build a "budget checker" widget.
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Track a few purchases you made (or make up realistic ones) and compare each
-#  one to a budget limit.  Use conditionals to label each one ("OK", "Over",
-#  "Warning", etc.).  Return the purchase amounts and their labels.
-#
-#  WORKED EXAMPLE (use completely different data!):
-#      purchase_total = 42.50
-#      budget_limit   = 60.00
-#      → values: [42.50, 60.00, 17.50]   (purchase, budget, remaining)
-#      → labels: ["Spent", "Budget", "Remaining"]
+#  WORKED EXAMPLE (use different data, don't copy it)
+#  ---------------------------------------------------------------------------
+#      title  = "Weekly Spending"
+#      labels = ["Food", "Transit", "Fun"]
+#      values = [42, 18, 25]
 # =============================================================================
 
 """Starter code for assignment2: Conditionals, Testing."""
 
-# ── Identity variables ────────────────────────────────────────────────────────
+# Change this to your real name.
 student_name = "Your Name"
+
+# Leave this exactly as-is.
 assignment_label = "assignment2"
 
 
-# ── Dashboard function ────────────────────────────────────────────────────────
-def get_dashboard_payload():
-    """Return dashboard-ready data for the Assignment 2 widget.
+def budget_status(spent, limit):
+    """Compare spending to a limit and return a status word.
 
-    Your job:
-      1. Define a few purchase/expense amounts as variables.
-      2. Define a budget limit.
-      3. Use if/elif/else to classify each purchase (e.g., "OK" or "Over").
-      4. Return your amounts and labels in the dictionary.
+    Rules to follow:
+      * If `spent` is LESS THAN `limit`     -> return "under"
+      * If `spent` is GREATER THAN `limit`  -> return "over"
+      * If they are EQUAL                   -> return "exact"
 
-    Tips:
-      - You can store results in a list by using list.append():
-            labels = []
-            labels.append("Groceries")   # adds "Groceries" to the end
-      - You can mix hard-coded numbers and computed values in your lists.
+    Examples (these are what the tests expect):
+        budget_status(40, 60)  ->  "under"
+        budget_status(75, 60)  ->  "over"
+        budget_status(60, 60)  ->  "exact"
+
+    Replace the line below with if / elif / else branches that compare
+    `spent` and `limit`.
     """
-    # ── Define your purchases ──────────────────────────────────────────────
-    # Replace these with your own spending categories and amounts.
-    # purchase_groceries = 55.00
-    # purchase_gas = 40.00
-    # purchase_dining = 80.00
-    # budget_limit = 60.00
+    # TODO: compare spent and limit, then return "under", "over", or "exact".
+    return ""
 
-    # ── Classify each purchase with conditionals ───────────────────────────
-    # Example:
-    #   if purchase_groceries <= budget_limit:
-    #       groceries_status = "Within Budget"
-    #   else:
-    #       groceries_status = "Over Budget"
 
-    # ── Build your output lists ────────────────────────────────────────────
-    my_labels = []   # e.g., ["Groceries", "Gas", "Dining"]
-    my_values = []   # e.g., [55.00, 40.00, 80.00]
+def get_dashboard_payload():
+    """Return the data for your Assignment 2 widget.
+
+    Put your own numbers in `values` and a matching label for each one in
+    `labels`.  Keep at least 3 items in each list, with at least 2 of the
+    numbers different from one another.
+    """
+    my_labels = []   # e.g. ["Food", "Transit", "Fun"]
+    my_values = []   # e.g. [42, 18, 25]
 
     return {
         "title": "Conditionals, Testing",
         "values": my_values,
         "labels": my_labels,
     }
-

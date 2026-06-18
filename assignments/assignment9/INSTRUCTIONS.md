@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `transform pipeline` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Write the `square` lambda, and finish `base_points(level)` (return `level * 10`) with the provided `@add_bonus` decorator applied. Then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: values = [3, 6, 9, 12].
+`square(4)` → `16`; with `@add_bonus` applied, `base_points(3)` → `35` (3 × 10, plus the +5 bonus).

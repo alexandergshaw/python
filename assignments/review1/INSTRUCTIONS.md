@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `fundamentals review` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Reviews everything from assignments 0–3. Finish `grade_label(score)` (branching) and `count_passing(scores, passing)` (a loop), then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: score_inputs = ["88", "92", "74"].
+`grade_label(82)` → `"B"`; `count_passing([55, 70, 90], 70)` → `2`.

@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `full dashboard integration` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+The capstone: one small piece from every part of the course — `grade_label` (branching), `count_active_days` (loops), `average` (functions), `total_items` (dict), `parse_numbers` (try/except), `Wallet` + `RewardsWallet` (classes + inheritance), the `square` lambda, and `base_points` with `@add_bonus` (decorators). Then make `get_dashboard_payload()` show your own real data. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: widget_data = [{"label": "Savings", "value": 1200}, {"label": "Expenses", "value": 830}].
+A `RewardsWallet` after `deposit(50)` has `balance` `50` and `reward_points()` → `5`; `grade_label(95)` → `"A"`.

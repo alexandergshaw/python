@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `reporting objects` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Write `SavingsAccount(Account)` that inherits from the provided `Account` class, overrides `kind()` to return `"savings"`, and adds `add_interest(rate)`. Then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: student_levels = {"Ari": "gold", "Kai": "silver"}.
+`SavingsAccount(100).kind()` → `"savings"`; after `add_interest(0.10)`, the balance becomes `110`.

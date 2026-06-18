@@ -8,7 +8,7 @@
 - Do not use terminal commands.
 
 ## Learning target
-Build your `oop review` logic and update `get_dashboard_payload()` with non-trivial values so the dashboard widget unlocks.
+Reviews everything from assignments 4–10 with one small task each: `average` + `above_average_count` (functions), `total_items` (dict), `parse_numbers` (try/except), `Counter` + `ResettableCounter` (classes + inheritance), the `square` lambda, `base_points` with `@add_bonus` (decorators), and fixing the bug in `count_passes` (debugging). Then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: class_scores = {"Quiz": 90, "Project": 94}.
+`above_average_count([1, 2, 3, 4])` → `2`; a `ResettableCounter` after `add(4)` then `reset()` has `count` `0`.

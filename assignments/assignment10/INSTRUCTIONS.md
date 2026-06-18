@@ -17,7 +17,7 @@
 7. Confirm checks pass before merging.
 
 ## Learning target
-Practice debugging by reading test/check output and updating `get_dashboard_payload()` with valid, non-trivial values.
+Practice debugging: the `count_passes(results)` function runs but returns the wrong count. Read the test output, find the broken line, and fix it. Then fill `get_dashboard_payload()` with non-trivial values. The widget unlocks when every test in `test_assignment.py` passes.
 
 ## Worked example (different data)
-Worked example data: ci_status = ["pass", "fail", "pass"], retry_counts = [0, 1, 0].
+Once fixed, `count_passes([True, False, True])` → `2` and `count_passes([])` → `0`.

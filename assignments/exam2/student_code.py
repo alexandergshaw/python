@@ -3,101 +3,122 @@
 #  File: assignments/exam2/student_code.py
 # =============================================================================
 #
-#  WHAT THIS FILE IS FOR
-#  ─────────────────────────────────────────────────────────────────────────────
-#  This is your second pre-exam practice assignment, covering everything from
-#  the second half of the course.  Use it as a personal study session — write
-#  code that genuinely challenges you.  If it's too easy, you're not growing!
+#  WHAT THIS PRACTICE COVERS (Assignments 4-10)
+#  ---------------------------------------------------------------------------
+#  Exam-style practice across every second-half topic, one small piece at a time:
 #
-#  EXAM 2 TOPICS TO REVIEW
-#  ─────────────────────────────────────────────────────────────────────────────
-#  ✓  Functions — definition, parameters, defaults, return values
-#  ✓  Data Structures — list, dict, tuple, set and their use cases
-#  ✓  File I/O — open(), read, write, append, "with" statement
-#  ✓  Error Handling — try/except, common exception types
-#  ✓  OOP Basics — class, __init__, self, attributes, instance methods
-#  ✓  Inheritance — class Child(Parent), super().__init__()
-#  ✓  Polymorphism — same method name, different behavior
-#  ✓  Lambda functions — lambda x: expression
-#  ✓  map() and filter()
-#  ✓  Decorators — wrapping functions to add behavior
+#    * Functions & modularization   mean() and a function that calls it
+#    * Data structures (dict)       price_total()
+#    * File I/O + error handling     parse_floats()  with try/except
+#    * Classes                       the Tally class
+#    * Inheritance                   ResettableTally(Tally)
+#    * Lambdas                       the `cube` lambda
+#    * Decorators                    base_points() with @add_bonus
+#    * Debugging                     fix the bug in count_failures()
 #
-#  EXAM STUDY CHECKLIST
-#  ─────────────────────────────────────────────────────────────────────────────
-#  □  Can you write a class with inheritance from scratch?
-#  □  Can you explain what `super().__init__()` does?
-#  □  Can you sort a list of dictionaries by a nested key using lambda?
-#  □  Can you write a decorator that times how long a function takes?
-#  □  Can you chain map() and filter() calls?
-#  □  Can you handle a missing key in a dictionary without crashing?
-#        → Use: my_dict.get("key", default_value)
-#  □  Can you predict what this outputs?
-#        class A:
-#            def greet(self): return "A"
-#        class B(A):
-#            def greet(self): return "B"
-#        objects = [A(), B(), A()]
-#        print([o.greet() for o in objects])    # ["A", "B", "A"]
-#
-#  PRACTICE CHALLENGES
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Challenge 1: Write a class BankAccount with deposit() and withdraw() methods.
-#               Raise a ValueError if a withdrawal exceeds the balance.
-#  Challenge 2: Use map() to convert a list of Fahrenheit temps to Celsius.
-#               Formula: C = (F - 32) * 5 / 9
-#  Challenge 3: Write a decorator that counts how many times a function is called.
-#  Challenge 4: Given a list of dicts [{"name": ..., "score": ...}, ...],
-#               use filter() to keep only scores above 80, and sorted() to
-#               sort the remaining items by score descending.
-#
-#  YOUR TASK: Complete get_dashboard_payload() with exam-style code.
-#  ─────────────────────────────────────────────────────────────────────────────
-#  WORKED EXAMPLE (use different data!):
-#      timed_prompts = ["loops", "files", "classes", "lambdas"]
-#      → each "prompt" maps to a self-assessed comfort score
-#      → values: [comfort scores]
-#      → labels: topic names
+#  Write each one from the rules given, then make the tests pass.  Finally,
+#  fill in get_dashboard_payload() with at least 3 of your own numbers.
 # =============================================================================
 
 """Starter code for exam2: Test 2 Prep."""
 
-# ── Identity variables ────────────────────────────────────────────────────────
+# Change this to your real name.
 student_name = "Your Name"
+
+# Leave this exactly as-is.
 assignment_label = "exam2"
 
 
-# ── Dashboard function ────────────────────────────────────────────────────────
-def get_dashboard_payload():
-    """Return dashboard-ready data for the Exam 2 prep widget.
+# ── Functions & modularization ───────────────────────────────────────────────
+def mean(numbers):
+    """Return the average of a list of numbers (return 0 for an empty list)."""
+    # TODO: return the sum divided by the count (or 0 if the list is empty).
+    return 0
 
-    Challenge yourself this time:
-      - Use a class with at least one method.
-      - Use a lambda somewhere.
-      - Use try/except around something that could fail.
-      - Return at least 3 meaningful computed values — not hard-coded ones.
+
+def below_average_count(numbers):
+    """Count how many numbers are below the average. CALL mean() to get it."""
+    # TODO: get the average by calling mean(numbers), then count the numbers
+    #       that are strictly less than it.
+    return 0
+
+
+# ── Data structures ──────────────────────────────────────────────────────────
+def price_total(prices):
+    """Add up all the values in a dictionary of prices and return the total."""
+    # TODO: sum the dictionary's values (0 for an empty dict).
+    return 0
+
+
+# ── File I/O + error handling ────────────────────────────────────────────────
+def parse_floats(lines):
+    """Convert a list of text lines into floats, skipping any that aren't numbers.
+
+    Use try / except around float(line) so bad lines are skipped.
+    Example: parse_floats(["1.5", "oops", "2.0"]) -> [1.5, 2.0]
     """
-    # ── Your study data ────────────────────────────────────────────────────
-    # Idea: rate your confidence in each topic 1–10, then compute stats.
-    # topics = {
-    #     "Functions":    8,
-    #     "OOP":          7,
-    #     "Lambdas":      6,
-    #     "Decorators":   5,
-    #     "File I/O":     9,
-    # }
+    # TODO: loop over lines; try float(line); skip on ValueError.
+    return []
 
-    # ── Compute summary stats ──────────────────────────────────────────────
-    # scores = list(topics.values())
-    # avg    = sum(scores) / len(scores)
-    # best   = max(scores)
-    # worst  = min(scores)
 
-    my_values = []
+# ── Classes ──────────────────────────────────────────────────────────────────
+class Tally:
+    """Keeps a running tally starting at zero."""
+
+    # TODO: write __init__(self) so it sets self.count to 0.
+
+    # TODO: write bump(self) so it increases self.count by 1.
+    pass
+
+
+# ── Inheritance ──────────────────────────────────────────────────────────────
+class ResettableTally(Tally):
+    """A Tally that can also be reset back to zero."""
+
+    # TODO: write reset(self) so it sets self.count back to 0.
+    #       (You inherit __init__ and bump() from Tally.)
+    pass
+
+
+# ── Lambdas ──────────────────────────────────────────────────────────────────
+# TODO: replace this stub with a lambda that returns x times x times x (x cubed).
+cube = lambda x: None
+
+
+# ── Decorators (add_bonus is PROVIDED -- do not change it) ────────────────────
+def add_bonus(func):
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs) + 5
+    return wrapper
+
+
+# TODO: put @add_bonus above this function, and return level * 10.
+def base_points(level):
+    return 0
+
+
+# ── Debugging ────────────────────────────────────────────────────────────────
+def count_failures(results):
+    """Count the False values in `results`. There is a bug -- fix the marked line."""
+    failed = 0
+    for result in results:
+        if not result:
+            failed = failed   # BUG: this never increases the count
+    return failed
+
+
+def get_dashboard_payload():
+    """Return the data for your Exam 2 prep widget.
+
+    Put your own numbers in `values` and a matching label for each one in
+    `labels`.  Keep at least 3 items in each list, with at least 2 of the
+    numbers different from one another.
+    """
     my_labels = []
+    my_values = []
 
     return {
         "title": "Test 2 Prep",
         "values": my_values,
         "labels": my_labels,
     }
-

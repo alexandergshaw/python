@@ -61,6 +61,91 @@ const ASSIGNMENTS: AssignmentMeta[] = [
   { id: "final", title: "Final Integration", week: "Week 16" },
 ];
 
+/**
+ * Python harness, defined once in the Pyodide global scope.
+ *
+ * `run_assignment_tests(dir, run_id)` runs the assignment's real
+ * `test_assignment.py` (written to `dir` alongside `student_code.py`) using the
+ * stdlib `unittest` runner and returns a JSON string describing the outcome.
+ * An assignment unlocks only when every test in that file passes.
+ *
+ * Each call loads the test module under a unique name so results never leak
+ * between assignments, and best-effort extracts the dashboard payload (only
+ * when the tests pass) so the widget can render without re-running the code.
+ */
+const TEST_HARNESS = `
+import importlib.util
+import io
+import json
+import pathlib
+import sys
+import unittest
+
+
+def run_assignment_tests(dir_path, run_id):
+    base = pathlib.Path(dir_path)
+    test_file = base / "test_assignment.py"
+    if not test_file.exists():
+        return json.dumps({"ok": False, "ran": 0, "summary": "No test_assignment.py found."})
+
+    # Load the test file fresh under a unique module name so nothing is cached
+    # between assignments.
+    mod_name = "test_assignment_%s" % run_id
+    spec = importlib.util.spec_from_file_location(mod_name, test_file)
+    module = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(module)
+    except Exception as exc:  # noqa: BLE001
+        return json.dumps({"ok": False, "ran": 0, "summary": "Could not load tests: %s" % exc})
+
+    suite = unittest.TestLoader().loadTestsFromModule(module)
+    result = unittest.TextTestRunner(stream=io.StringIO(), verbosity=0).run(suite)
+
+    ran = result.testsRun
+    broken = len(result.failures) + len(result.errors)
+    passed = ran - broken
+    ok = result.wasSuccessful() and ran > 0
+
+    if ran == 0:
+        summary = "No tests were found to run."
+    elif ok:
+        summary = "All %d unit tests passed." % ran
+    else:
+        summary = "%d of %d unit tests passed." % (passed, ran)
+
+    payload = None
+    if ok:
+        try:
+            sc_spec = importlib.util.spec_from_file_location(
+                "student_code_%s" % run_id, base / "student_code.py"
+            )
+            sc_mod = importlib.util.module_from_spec(sc_spec)
+            sc_spec.loader.exec_module(sc_mod)
+            fn = getattr(sc_mod, "get_dashboard_payload", None)
+            raw = fn() if callable(fn) else None
+            if isinstance(raw, dict):
+                payload = {
+                    "title": raw.get("title"),
+                    "values": list(raw.get("values", [])),
+                    "labels": list(raw.get("labels", [])),
+                }
+        except Exception:  # noqa: BLE001
+            payload = None
+
+    return json.dumps(
+        {"ok": ok, "ran": ran, "passed": passed, "summary": summary, "payload": payload},
+        default=str,
+    )
+`;
+
+type TestRunResult = {
+  ok: boolean;
+  ran: number;
+  passed?: number;
+  summary: string;
+  payload?: unknown;
+};
+
 function isValidPayload(payload: unknown): payload is DashboardPayload {
   if (!payload || typeof payload !== "object") {
     return false;
@@ -93,79 +178,75 @@ function isValidPayload(payload: unknown): payload is DashboardPayload {
   return labels.every((label) => typeof label === "string" && label.trim().length > 0);
 }
 
-async function evaluateAssignment(pyodide: PyodideInterface, assignment: AssignmentMeta): Promise<AssignmentStatus> {
+async function evaluateAssignment(
+  pyodide: PyodideInterface,
+  assignment: AssignmentMeta,
+  runId: number,
+): Promise<AssignmentStatus> {
   const response = await fetch(`/api/student-code?assignment=${assignment.id}`);
   if (!response.ok) {
     return {
       ...assignment,
       complete: false,
       payload: null,
-      message: "Could not load student_code.py",
+      message: "Could not load assignment files.",
     };
   }
 
-  const { code } = (await response.json()) as { code: string };
-  try {
-    pyodide.runPython(code);
-  } catch {
-    return {
-      ...assignment,
-      complete: false,
-      payload: null,
-      message: "Fix Python syntax errors in student_code.py.",
-    };
-  }
-
-  if (!pyodide.globals.has("get_dashboard_payload")) {
-    return {
-      ...assignment,
-      complete: false,
-      payload: null,
-      message: "Add get_dashboard_payload() to unlock this widget.",
-    };
-  }
-
-  const exportedFunction = pyodide.globals.get("get_dashboard_payload") as {
-    destroy?: () => void;
-    (): unknown;
+  const { code, testCode } = (await response.json()) as {
+    code?: string;
+    testCode?: string | null;
   };
 
-  let rawPayload: unknown;
+  if (typeof code !== "string") {
+    return { ...assignment, complete: false, payload: null, message: "Missing student_code.py." };
+  }
+  if (typeof testCode !== "string") {
+    return {
+      ...assignment,
+      complete: false,
+      payload: null,
+      message: "Missing test_assignment.py — cannot run unit tests.",
+    };
+  }
+
+  // Drop both files into Pyodide's virtual filesystem so the test can import the
+  // student code exactly the way it does on disk (via __file__.with_name(...)).
+  const dir = `/assignments/${assignment.id}`;
   try {
-    rawPayload = await exportedFunction();
+    pyodide.FS.mkdirTree(dir);
+  } catch {
+    // Directory already exists from a previous run — fine, we overwrite below.
+  }
+  pyodide.FS.writeFile(`${dir}/student_code.py`, code);
+  pyodide.FS.writeFile(`${dir}/test_assignment.py`, testCode);
+
+  const runTests = pyodide.globals.get("run_assignment_tests") as {
+    destroy?: () => void;
+    (dir: string, runId: number): string;
+  };
+
+  let result: TestRunResult;
+  try {
+    result = JSON.parse(runTests(dir, runId)) as TestRunResult;
   } catch {
     return {
       ...assignment,
       complete: false,
       payload: null,
-      message: "get_dashboard_payload() raised an error.",
+      message: "The unit-test runner crashed.",
     };
   } finally {
-    exportedFunction.destroy?.();
+    runTests.destroy?.();
   }
 
-  const payload =
-    rawPayload && typeof (rawPayload as { toJs?: () => unknown }).toJs === "function"
-      ? ((rawPayload as { toJs: () => unknown }).toJs() as unknown)
-      : rawPayload;
-  if (rawPayload && typeof (rawPayload as { destroy?: () => void }).destroy === "function") {
-    (rawPayload as { destroy: () => void }).destroy();
-  }
-
-  if (!isValidPayload(payload)) {
-    return {
-      ...assignment,
-      complete: false,
-      payload: null,
-      message: "Return non-trivial title/labels/values data to unlock.",
-    };
-  }
+  const payload = isValidPayload(result.payload) ? result.payload : null;
 
   return {
     ...assignment,
-    complete: true,
+    complete: Boolean(result.ok),
     payload,
-    message: "Widget unlocked",
+    message: result.summary || (result.ok ? "Unit tests passed." : "Unit tests failed."),
   };
 }
 
@@ -209,14 +290,14 @@ export default function Home() {
     async function loadDashboard() {
       try {
         const pyodide = await loadPyodide();
+        // Define the unittest harness once; every assignment reuses it.
+        pyodide.runPython(TEST_HARNESS);
+
         const nextStatuses: AssignmentStatus[] = [];
 
+        let runId = 0;
         for (const assignment of ASSIGNMENTS) {
-          if (pyodide.globals.has("get_dashboard_payload")) {
-            pyodide.globals.delete("get_dashboard_payload");
-          }
-
-          const status = await evaluateAssignment(pyodide, assignment);
+          const status = await evaluateAssignment(pyodide, assignment, runId++);
           nextStatuses.push(status);
         }
 
@@ -248,8 +329,10 @@ export default function Home() {
     };
   }, []);
 
+  // An assignment unlocks the moment its unit tests pass. The chart bars render
+  // only when get_dashboard_payload() also returns non-trivial data.
   const unlockedWidgets = useMemo(
-    () => statuses.filter((status) => status.complete && status.payload),
+    () => statuses.filter((status) => status.complete),
     [statuses],
   );
 
@@ -309,7 +392,7 @@ export default function Home() {
         >
           <h1 className="text-base font-bold gradient-text">Course Progress</h1>
           <p className="mt-1 text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
-            Complete each <code className="rounded px-1 py-0.5 font-mono text-[10px]" style={{ background: "var(--bg-card)", color: "var(--accent-400)" }}>student_code.py</code> to unlock dashboard widgets.
+            Pass the <code className="rounded px-1 py-0.5 font-mono text-[10px]" style={{ background: "var(--bg-card)", color: "var(--accent-400)" }}>test_assignment.py</code> unit tests in each assignment to unlock dashboard widgets.
           </p>
 
           {/* Progress bar */}
@@ -333,7 +416,8 @@ export default function Home() {
 
           <ul className="mt-4 space-y-1.5">
             {(loading ? ASSIGNMENTS : statuses).map((assignment) => {
-              const complete = !loading && statuses.find((s) => s.id === assignment.id)?.complete;
+              const status = loading ? undefined : statuses.find((s) => s.id === assignment.id);
+              const complete = status?.complete;
               return (
                 <li
                   key={assignment.id}
@@ -366,6 +450,11 @@ export default function Home() {
                   <p className="mt-0.5 text-[10px]" style={{ color: "var(--text-secondary)" }}>
                     {assignment.week} — {assignment.title}
                   </p>
+                  {!loading && !complete && status?.message && (
+                    <p className="mt-1 text-[10px]" style={{ color: "var(--locked-fg)" }}>
+                      {status.message}
+                    </p>
+                  )}
                 </li>
               );
             })}
@@ -385,14 +474,14 @@ export default function Home() {
           >
             <h2 className="text-xl font-bold gradient-text">Personal Data Dashboard</h2>
             <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
-              Widgets appear automatically when{" "}
+              Widgets appear automatically when an assignment&apos;s{" "}
               <code
                 className="rounded px-1.5 py-0.5 font-mono text-xs"
                 style={{ background: "var(--bg-card)", color: "var(--accent-400)" }}
               >
-                get_dashboard_payload()
+                test_assignment.py
               </code>{" "}
-              returns valid, non-trivial data.
+              unit tests all pass.
             </p>
           </div>
 
@@ -401,8 +490,9 @@ export default function Home() {
             {loading
               ? Array.from({ length: 4 }).map((_, i) => <SkeletonCard key={i} />)
               : unlockedWidgets.map((status) => {
-                  const vals = status.payload!.values;
-                  const maxVal = Math.max(...vals.map(Math.abs));
+                  const maxVal = status.payload
+                    ? Math.max(...status.payload.values.map(Math.abs))
+                    : 0;
                   return (
                     <article
                       key={status.id}
@@ -416,7 +506,7 @@ export default function Home() {
                       {/* Widget header */}
                       <div className="mb-3 flex items-start justify-between gap-2">
                         <h3 className="text-sm font-bold" style={{ color: "var(--text-primary)" }}>
-                          {status.payload?.title}
+                          {status.payload?.title ?? status.title}
                         </h3>
                         <span
                           className="shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide"
@@ -426,22 +516,33 @@ export default function Home() {
                         </span>
                       </div>
 
-                      {/* Data rows with mini-bar */}
-                      <div className="space-y-2">
-                        {status.payload?.labels.map((label, index) => (
-                          <div key={`${status.id}-${label}-${index}`}>
-                            <div className="flex items-center justify-between">
-                              <span className="text-xs" style={{ color: "var(--text-secondary)" }}>
-                                {label}
-                              </span>
-                              <span className="text-xs font-semibold tabular-nums" style={{ color: "var(--text-primary)" }}>
-                                {status.payload?.values[index]}
-                              </span>
+                      {status.payload ? (
+                        /* Data rows with mini-bar */
+                        <div className="space-y-2">
+                          {status.payload.labels.map((label, index) => (
+                            <div key={`${status.id}-${label}-${index}`}>
+                              <div className="flex items-center justify-between">
+                                <span className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                                  {label}
+                                </span>
+                                <span className="text-xs font-semibold tabular-nums" style={{ color: "var(--text-primary)" }}>
+                                  {status.payload.values[index]}
+                                </span>
+                              </div>
+                              <MiniBar value={status.payload.values[index]} max={maxVal} />
                             </div>
-                            <MiniBar value={status.payload!.values[index]} max={maxVal} />
-                          </div>
-                        ))}
-                      </div>
+                          ))}
+                        </div>
+                      ) : (
+                        /* Tests pass, but get_dashboard_payload() has no chartable data yet */
+                        <p className="text-xs leading-relaxed" style={{ color: "var(--text-secondary)" }}>
+                          Unit tests passing. Return non-trivial{" "}
+                          <code className="rounded px-1 py-0.5 font-mono text-[10px]" style={{ background: "var(--bg-base)", color: "var(--accent-400)" }}>
+                            title / labels / values
+                          </code>{" "}
+                          from <code className="font-mono text-[10px]" style={{ color: "var(--accent-400)" }}>get_dashboard_payload()</code> to chart your data.
+                        </p>
+                      )}
                     </article>
                   );
                 })}

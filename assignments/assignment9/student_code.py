@@ -1,144 +1,87 @@
 # =============================================================================
-#  ASSIGNMENT 9 — Advanced Python: Lambdas and Decorators
+#  ASSIGNMENT 9 — Lambdas and Decorators
 #  File: assignments/assignment9/student_code.py
 # =============================================================================
 #
 #  WHAT YOU'RE LEARNING THIS WEEK
-#  ─────────────────────────────────────────────────────────────────────────────
-#  LAMBDA FUNCTIONS — A short, anonymous (nameless) function written in one
-#  line.  Great for simple operations you only need once.
+#  ---------------------------------------------------------------------------
+#  A LAMBDA is a tiny one-line function with no name.  These two are the same:
 #
-#  Syntax:
-#      lambda parameters: expression
+#      def double(x):          double = lambda x: x * 2
+#          return x * 2
 #
-#  Examples:
-#      double  = lambda x: x * 2
-#      add     = lambda x, y: x + y
-#      is_even = lambda n: n % 2 == 0
+#  You call it just like any function:  double(5)  ->  10
 #
-#      print(double(5))       # 10
-#      print(add(3, 7))       # 10
-#      print(is_even(4))      # True
+#  A DECORATOR is a function that wraps another function to add behavior.  You
+#  apply one by writing @name on the line above a function:
 #
-#  Lambdas are especially useful as arguments to built-in functions:
+#      @add_bonus
+#      def score():
+#          return 10
+#      # because of @add_bonus, calling score() runs the wrapped version
 #
-#      numbers = [5, 2, 8, 1, 9, 3]
-#      sorted_numbers = sorted(numbers)                     # [1, 2, 3, 5, 8, 9]
+#  YOUR TASK (three small things)
+#  ---------------------------------------------------------------------------
+#  1. Write a lambda named `square` that takes one number and returns that
+#     number multiplied by itself.  (Replace the stub below.)
 #
-#      words = ["banana", "apple", "cherry", "date"]
-#      sorted_by_length = sorted(words, key=lambda w: len(w))
-#      # ["date", "apple", "banana", "cherry"]
+#  2. The decorator `add_bonus` is PROVIDED for you (don't change it).  It adds
+#     5 to whatever number a function returns.  Finish `base_points(level)` so
+#     it returns the level multiplied by 10 -- AND apply the decorator by
+#     writing  @add_bonus  on the line above the function.
 #
-#      data = [{"name": "Ana", "score": 92}, {"name": "Bo", "score": 85}]
-#      sorted_data = sorted(data, key=lambda d: d["score"], reverse=True)
-#      # sorted highest → lowest score
+#  3. Fill in `get_dashboard_payload()` with at least 3 of your own numbers.
 #
-#  ── map() and filter() ───────────────────────────────────────────────────────
-#  map(function, iterable) — applies a function to every item:
-#      numbers  = [1, 2, 3, 4, 5]
-#      doubled  = list(map(lambda x: x * 2, numbers))   # [2, 4, 6, 8, 10]
-#
-#  filter(function, iterable) — keeps only items where function returns True:
-#      evens = list(filter(lambda x: x % 2 == 0, numbers))  # [2, 4]
-#
-#  DECORATORS — A function that WRAPS another function to add extra behavior,
-#  without changing the original function's code.
-#
-#  How they work conceptually:
-#      def my_decorator(func):
-#          def wrapper(*args, **kwargs):
-#              print("Before the function runs")
-#              result = func(*args, **kwargs)            # call the real function
-#              print("After the function runs")
-#              return result
-#          return wrapper                                 # return the wrapper
-#
-#      @my_decorator                  # this line applies the decorator
-#      def say_hello():
-#          print("Hello!")
-#
-#      say_hello()
-#      # Output:
-#      #   Before the function runs
-#      #   Hello!
-#      #   After the function runs
-#
-#  Common real-world decorators:
-#      @staticmethod   — you already saw this in Assignment 8
-#      @classmethod    — same
-#      @property       — turn a method into a read-only attribute
-#
-#  YOUR TASK: Build a "transform pipeline" widget.
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Start with a list of raw numbers.  Use lambdas + map/filter to transform
-#  them (e.g., double them, keep only evens, square them).  Return the
-#  original values and the transformed values for comparison.
-#
-#  WORKED EXAMPLE (use different data!):
-#      values = [3, 6, 9, 12, 15]
-#      doubled  = list(map(lambda x: x * 2, values))
-#      evens    = list(filter(lambda x: x % 2 == 0, doubled))
-#      → values: [sum(values), sum(doubled), sum(evens)]
-#      → labels: ["Raw Total", "Doubled Total", "Even Doubled Total"]
+#  WORKED EXAMPLE (use different data, don't copy it)
+#  ---------------------------------------------------------------------------
+#      title  = "Points Earned"
+#      labels = ["Level 1", "Level 2", "Level 3"]
+#      values = [15, 25, 35]
 # =============================================================================
 
-"""Starter code for assignment9: Advanced Python: Lambdas/Decorators."""
+"""Starter code for assignment9: Lambdas/Decorators."""
 
-# ── Identity variables ────────────────────────────────────────────────────────
+# Change this to your real name.
 student_name = "Your Name"
+
+# Leave this exactly as-is.
 assignment_label = "assignment9"
 
 
-# =============================================================================
-#  OPTIONALLY DEFINE A DECORATOR HERE
-#  ─────────────────────────────────────────────────────────────────────────────
-#  You can define a decorator and apply it to a helper function to practice
-#  the concept.  It doesn't need to change the output data — it could just
-#  print a log message.
-#
-#  Example:
-#      def log_call(func):
-#          def wrapper(*args, **kwargs):
-#              print(f"Calling {func.__name__}...")
-#              return func(*args, **kwargs)
-#          return wrapper
-#
-#      @log_call
-#      def transform(values):
-#          return list(map(lambda x: x ** 2, values))
-# =============================================================================
+# TODO 1: replace this stub with a lambda that returns x times itself.
+#         Example shape:  square = lambda x: ...
+square = lambda x: None
 
 
-# ── Dashboard function ────────────────────────────────────────────────────────
+# ---------------------------------------------------------------------------
+#  PROVIDED FOR YOU -- do not change this decorator.
+#  It wraps a function and adds 5 to whatever number that function returns.
+# ---------------------------------------------------------------------------
+def add_bonus(func):
+    def wrapper(*args, **kwargs):
+        return func(*args, **kwargs) + 5
+    return wrapper
+
+
+# TODO 2: put @add_bonus on the line directly above this function, and make it
+#         return level * 10.
+def base_points(level):
+    # TODO: return the level multiplied by 10.
+    return 0
+
+
 def get_dashboard_payload():
-    """Return dashboard-ready data for the Assignment 9 widget.
+    """Return the data for your Assignment 9 widget.
 
-    Your job:
-      1. Define a list of raw numbers.
-      2. Use at least ONE lambda with map() or filter() to transform them.
-      3. Optionally apply a decorator to a helper function.
-      4. Return comparison stats (raw vs. transformed) as values and labels.
+    Put your own numbers in `values` and a matching label for each one in
+    `labels`.  Keep at least 3 items in each list, with at least 2 of the
+    numbers different from one another.
     """
-    # ── Raw input data ─────────────────────────────────────────────────────
-    # Replace with your own numbers.
-    # raw_values = [3, 6, 9, 12, 15]
-
-    # ── Apply lambda transformations ───────────────────────────────────────
-    # doubled  = list(map(lambda x: x * 2,      raw_values))
-    # squared  = list(map(lambda x: x ** 2,     raw_values))
-    # filtered = list(filter(lambda x: x > 10,  raw_values))
-
-    # ── Compute summary stats ──────────────────────────────────────────────
-    # raw_sum  = sum(raw_values)
-    # dbl_sum  = sum(doubled)
-    # sq_sum   = sum(squared)
-
-    my_values = []
-    my_labels = []
+    my_labels = []   # e.g. ["Level 1", "Level 2", "Level 3"]
+    my_values = []   # e.g. [15, 25, 35]
 
     return {
-        "title": "Advanced Python: Lambdas/Decorators",
+        "title": "Lambdas/Decorators",
         "values": my_values,
         "labels": my_labels,
     }
-

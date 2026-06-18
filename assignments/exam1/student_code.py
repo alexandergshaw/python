@@ -3,89 +3,92 @@
 #  File: assignments/exam1/student_code.py
 # =============================================================================
 #
-#  WHAT THIS FILE IS FOR
-#  ─────────────────────────────────────────────────────────────────────────────
-#  This is your pre-exam practice assignment.  Completing it unlocks an exam-
-#  prep widget on the dashboard, but more importantly it's a chance to make
-#  sure you can write Python confidently from scratch, covering everything
-#  from the first half of the course.
+#  WHAT THIS PRACTICE COVERS (Assignments 0-3)
+#  ---------------------------------------------------------------------------
+#  * Variables and types
+#  * Branching / conditionals   (if / elif / else, comparisons)
+#  * Loops                      (for item in list, the counting/summing pattern)
 #
-#  EXAM 1 TOPICS TO REVIEW
-#  ─────────────────────────────────────────────────────────────────────────────
-#  ✓  Variables — creating and naming them, the four basic types
-#  ✓  print() — displaying output
-#  ✓  Conditionals — if / elif / else, comparison operators, logical operators
-#  ✓  for loops — iterating over lists and ranges
-#  ✓  while loops — condition-based repetition, avoiding infinite loops
-#  ✓  Lists — creating, indexing, slicing, appending, len / sum / min / max
+#  This is exam-style practice: write two short functions from the rules given,
+#  then make the tests pass.  Everything here uses skills from the first weeks.
 #
-#  EXAM STUDY CHECKLIST
-#  ─────────────────────────────────────────────────────────────────────────────
-#  □  Can you write a for loop from memory (no looking it up)?
-#  □  Can you calculate the average of a list using a loop AND using sum()?
-#  □  Can you write nested if/elif/else (conditionals inside conditionals)?
-#  □  Do you know the difference between = (assign) and == (compare)?
-#  □  Can you explain what `range(1, 10, 2)` produces?   (1, 3, 5, 7, 9)
-#  □  Can you access the third item in a list? (hint: index 2, not 3!)
-#  □  Can you predict what this prints?
-#         x = 10
-#         for i in range(3):
-#             x += i
-#         print(x)               # answer: 13  (10 + 0 + 1 + 2)
+#  THE SUMMING PATTERN (helpful for the second function)
+#  ---------------------------------------------------------------------------
+#  Start a total at 0 before the loop, then add to it inside the loop:
 #
-#  PRACTICE CHALLENGES (write these yourself, then check your answers)
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Challenge 1: Given a list of quiz scores, print only the ones above 80.
-#  Challenge 2: Count how many items in a list are negative numbers.
-#  Challenge 3: Write a while loop that prints even numbers from 0 to 20.
-#  Challenge 4: Given a list, create a new list with each value doubled.
+#      total = 0
+#      for number in [2, 5, 8]:
+#          total = total + number
+#      # total is now 15
 #
-#  YOUR TASK: Complete get_dashboard_payload() with practice data.
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Use this file to practice writing Python from scratch.  Make up some quiz
-#  or practice scores, compute some statistics with loops, and return them.
+#  TIP: number % 2 == 0 is True when `number` is even (no remainder when
+#  divided by 2).
 #
-#  WORKED EXAMPLE (use different data!):
-#      practice_answers = [True, False, True, True]
-#      correct = sum(1 for a in practice_answers if a)   # counts True values
-#      → values: [4, 3, 1]
-#      → labels: ["Questions", "Correct", "Incorrect"]
+#  YOUR TASK (three small things)
+#  ---------------------------------------------------------------------------
+#  1. Finish `classify_number(n)` -- return "negative", "zero", or "positive".
+#  2. Finish `sum_even(numbers)`  -- add up only the even numbers in a list.
+#  3. Fill in `get_dashboard_payload()` with at least 3 of your own numbers.
+#
+#  WORKED EXAMPLE (use different data, don't copy it)
+#  ---------------------------------------------------------------------------
+#      title  = "Practice Run"
+#      labels = ["Q1", "Q2", "Q3"]
+#      values = [4, 3, 1]
 # =============================================================================
 
 """Starter code for exam1: Test 1 Prep."""
 
-# ── Identity variables ────────────────────────────────────────────────────────
+# Change this to your real name.
 student_name = "Your Name"
+
+# Leave this exactly as-is.
 assignment_label = "exam1"
 
 
-# ── Dashboard function ────────────────────────────────────────────────────────
-def get_dashboard_payload():
-    """Return dashboard-ready data for the Exam 1 prep widget.
+def classify_number(n):
+    """Describe a number as "negative", "zero", or "positive".
 
-    Challenge yourself:
-      - Write the whole function from scratch using what you've learned.
-      - Use at least one loop AND one conditional.
-      - Compute at least 3 meaningful statistics or values from your data.
-      - Don't just hard-code the output — actually compute it!
+    Rules to follow:
+      * If n is LESS THAN 0     -> return "negative"
+      * If n is EXACTLY 0       -> return "zero"
+      * If n is GREATER THAN 0  -> return "positive"
+
+    Examples (these are what the tests expect):
+        classify_number(-4)  ->  "negative"
+        classify_number(0)   ->  "zero"
+        classify_number(7)   ->  "positive"
     """
-    # ── Your practice data ─────────────────────────────────────────────────
-    # Example: a list of quiz scores from this week's study session.
-    # quiz_scores = [78, 85, 90, 62, 95, 88]
+    # TODO: write if / elif / else branches and return the right word.
+    return ""
 
-    # ── Compute statistics using loops and conditionals ────────────────────
-    # Ideas:
-    #   - total score, average, highest, lowest
-    #   - number of scores above passing threshold
-    #   - number of scores below a certain value
 
-    # ── Build your output ──────────────────────────────────────────────────
-    my_values = []   # at least 3 numbers
-    my_labels = []   # a matching label for each number
+def sum_even(numbers):
+    """Add up only the even numbers in a list and return the total.
+
+    `numbers` is a list of whole numbers.  Loop through it and add a number to
+    your running total only when it is even (number % 2 == 0).
+
+    Examples (these are what the tests expect):
+        sum_even([1, 2, 3, 4])  ->  6     (2 + 4)
+        sum_even([1, 3, 5])     ->  0     (no even numbers)
+    """
+    # TODO: use the summing pattern, adding only even numbers.
+    return 0
+
+
+def get_dashboard_payload():
+    """Return the data for your Exam 1 prep widget.
+
+    Put your own numbers in `values` and a matching label for each one in
+    `labels`.  Keep at least 3 items in each list, with at least 2 of the
+    numbers different from one another.
+    """
+    my_labels = []   # e.g. ["Q1", "Q2", "Q3"]
+    my_values = []   # e.g. [4, 3, 1]
 
     return {
         "title": "Test 1 Prep",
         "values": my_values,
         "labels": my_labels,
     }
-

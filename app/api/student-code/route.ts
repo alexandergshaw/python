@@ -28,12 +28,25 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "Invalid assignment value" }, { status: 400 });
   }
 
-  const filePath = path.join(process.cwd(), "assignments", assignment, "student_code.py");
+  const assignmentDir = path.join(process.cwd(), "assignments", assignment);
+  const codePath = path.join(assignmentDir, "student_code.py");
+  const testPath = path.join(assignmentDir, "test_assignment.py");
 
+  let code: string;
   try {
-    const code = await readFile(filePath, "utf8");
-    return NextResponse.json({ assignment, code });
+    code = await readFile(codePath, "utf8");
   } catch {
     return NextResponse.json({ error: "Assignment file not found" }, { status: 404 });
   }
+
+  // The unit tests decide whether an assignment unlocks, so ship them too.
+  // A missing test file is not fatal — the client treats it as "locked".
+  let testCode: string | null = null;
+  try {
+    testCode = await readFile(testPath, "utf8");
+  } catch {
+    testCode = null;
+  }
+
+  return NextResponse.json({ assignment, code, testCode });
 }

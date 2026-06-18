@@ -1,139 +1,91 @@
 # =============================================================================
-#  ASSIGNMENT 7 — OOP: Classes
+#  ASSIGNMENT 7 — Object-Oriented Programming: Classes
 #  File: assignments/assignment7/student_code.py
 # =============================================================================
 #
 #  WHAT YOU'RE LEARNING THIS WEEK
-#  ─────────────────────────────────────────────────────────────────────────────
-#  OBJECT-ORIENTED PROGRAMMING (OOP) — A way of organizing code by grouping
-#  related data and behavior into a single unit called a CLASS.
-#
-#  Think of a class as a BLUEPRINT, and objects (instances) as the actual
-#  things built from that blueprint.
-#
-#      Blueprint: "Dog"        →  class Dog
-#      Actual dog: "Rex"       →  rex = Dog("Rex", "Labrador", 3)
-#
-#  ── Defining a class ─────────────────────────────────────────────────────────
+#  ---------------------------------------------------------------------------
+#  A CLASS is a blueprint for making objects that bundle data + behavior.
 #
 #      class Dog:
-#          """Represents a dog."""
+#          def __init__(self, name):   # runs when you create a Dog
+#              self.name = name         # store data ON the object
 #
-#          def __init__(self, name, breed, age):
-#              """Constructor — runs when you create a new Dog instance.
+#          def bark(self):              # a method = a function on the object
+#              return self.name + " says woof"
 #
-#              `self` refers to THIS specific object being created.
-#              All instance attributes must be set on `self`.
-#              """
-#              self.name  = name    # instance attribute: this dog's name
-#              self.breed = breed   # instance attribute: this dog's breed
-#              self.age   = age     # instance attribute: this dog's age
+#      rex = Dog("Rex")                 # make an instance
+#      rex.name                         # "Rex"        (an attribute)
+#      rex.bark()                       # "Rex says woof" (a method call)
 #
-#          def bark(self):
-#              """Instance method — a function that belongs to the class."""
-#              return f"{self.name} says: Woof!"
+#  KEY WORDS
+#    __init__   the "constructor" -- sets up a new object's starting data
+#    self       the object itself; every method's first parameter
+#    attribute  a value stored on the object (self.name)
+#    method     a function defined inside the class
 #
-#          def describe(self):
-#              return f"{self.name} is a {self.age}-year-old {self.breed}."
+#  YOUR TASK (two small things)
+#  ---------------------------------------------------------------------------
+#  1. Finish the `Wallet` class below.  It needs:
+#        * __init__(self, owner): store the owner's name, and start `balance`
+#          at 0.
+#        * deposit(self, amount): add `amount` to the balance.
+#        * can_afford(self, price): return True if the balance is at least the
+#          price, otherwise False.
 #
-#  ── Creating and using instances ─────────────────────────────────────────────
+#  2. Fill in `get_dashboard_payload()` with at least 3 of your own numbers.
 #
-#      rex  = Dog("Rex",  "Labrador",  3)   # create one Dog
-#      luna = Dog("Luna", "Poodle",    5)   # create another Dog
-#
-#      print(rex.name)         # Rex            — access an attribute
-#      print(rex.bark())       # Rex says: Woof! — call a method
-#      print(luna.describe())  # Luna is a 5-year-old Poodle.
-#
-#      # You can also change attributes after creation:
-#      rex.age = 4
-#
-#  ── KEY TERMS ────────────────────────────────────────────────────────────────
-#  class       — the blueprint / template
-#  instance    — a specific object created from the class
-#  __init__    — the constructor (runs on creation, always has `self` first)
-#  self        — a reference to the current instance inside methods
-#  attribute   — a variable stored ON the object (self.name, self.age)
-#  method      — a function defined inside a class (always takes self)
-#
-#  YOUR TASK: Build an "expense model" widget.
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Create an Expense class (or similar) that stores a category and amount.
-#  Make a list of Expense instances, and use their attributes to compute
-#  summary data for the dashboard.
-#
-#  WORKED EXAMPLE (use different data!):
-#      transactions = [("Food", 14.2), ("Books", 22.0), ("Transport", 9.5)]
-#      → Create an Expense class with category and amount attributes.
-#      → Compute total, max expense, count.
-#      → values: [45.7, 22.0, 3]
-#      → labels: ["Total Spent", "Largest", "# Items"]
+#  WORKED EXAMPLE (use different data, don't copy it)
+#  ---------------------------------------------------------------------------
+#      title  = "Account Activity"
+#      labels = ["Deposit 1", "Deposit 2", "Deposit 3"]
+#      values = [50, 20, 35]
 # =============================================================================
 
 """Starter code for assignment7: OOP: Classes."""
 
-# ── Identity variables ────────────────────────────────────────────────────────
+# Change this to your real name.
 student_name = "Your Name"
+
+# Leave this exactly as-is.
 assignment_label = "assignment7"
 
 
-# =============================================================================
-#  DEFINE YOUR CLASS HERE (above get_dashboard_payload)
-#  ─────────────────────────────────────────────────────────────────────────────
-#  Start simple: give it an __init__ and at least one method.
-#
-#  Example skeleton:
-#
-#      class Expense:
-#          """Represents a single expense transaction."""
-#
-#          def __init__(self, category, amount):
-#              """Create an Expense with a category name and dollar amount."""
-#              self.category = category
-#              self.amount   = amount
-#
-#          def is_large(self, threshold=20.0):
-#              """Return True if this expense is above the threshold."""
-#              return self.amount > threshold
-#
-#          def summary(self):
-#              """Return a short string describing this expense."""
-#              return f"{self.category}: ${self.amount:.2f}"
-# =============================================================================
+class Wallet:
+    """A simple wallet that tracks an owner and a money balance."""
+
+    def __init__(self, owner):
+        """Set up a new wallet.
+
+        Store the `owner` name on the object, and start `balance` at 0.
+        (Hint: self.owner = owner, and set self.balance to 0.)
+        """
+        # TODO: save self.owner and set self.balance to 0.
+        pass
+
+    def deposit(self, amount):
+        """Add `amount` to this wallet's balance."""
+        # TODO: increase self.balance by amount.
+        pass
+
+    def can_afford(self, price):
+        """Return True if the balance is at least `price`, else False."""
+        # TODO: return whether self.balance is >= price.
+        pass
 
 
-# ── Dashboard function ────────────────────────────────────────────────────────
 def get_dashboard_payload():
-    """Return dashboard-ready data for the Assignment 7 widget.
+    """Return the data for your Assignment 7 widget.
 
-    Your job:
-      1. Define a class above this function (see skeleton above).
-      2. Create a list of instances from your class.
-      3. Use the instance attributes and/or methods to compute summary stats.
-      4. Return at least 3 stats as values with matching labels.
+    Put your own numbers in `values` and a matching label for each one in
+    `labels`.  Keep at least 3 items in each list, with at least 2 of the
+    numbers different from one another.
     """
-    # ── Create instances ───────────────────────────────────────────────────
-    # Replace with your own data.
-    # transactions = [
-    #     Expense("Food",      14.20),
-    #     Expense("Books",     22.00),
-    #     Expense("Transport",  9.50),
-    #     Expense("Coffee",     5.75),
-    # ]
-
-    # ── Compute stats from instances ───────────────────────────────────────
-    # Use a loop to pull out .amount (or whatever your attribute is called).
-    # amounts = [e.amount for e in transactions]   # list comprehension shorthand
-    # total   = sum(amounts)
-    # largest = max(amounts)
-    # count   = len(transactions)
-
-    my_values = []
-    my_labels = []
+    my_labels = []   # e.g. ["Deposit 1", "Deposit 2", "Deposit 3"]
+    my_values = []   # e.g. [50, 20, 35]
 
     return {
         "title": "OOP: Classes",
         "values": my_values,
         "labels": my_labels,
     }
-
