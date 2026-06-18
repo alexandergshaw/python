@@ -345,7 +345,7 @@ export default function Home() {
       <header
         className="sticky top-0 z-20 flex items-center justify-between px-6 py-3"
         style={{
-          background: "rgba(8,11,18,0.85)",
+          background: "rgba(1,10,4,0.85)",
           backdropFilter: "blur(12px)",
           borderBottom: "1px solid var(--border-subtle)",
         }}
@@ -353,13 +353,14 @@ export default function Home() {
         <div className="flex items-center gap-3">
           {/* Logo mark */}
           <div
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold text-white"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-sm font-bold text-[#021006]"
             style={{ background: "linear-gradient(135deg, var(--accent-600), var(--accent-violet))" }}
           >
             Py
           </div>
           <span className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>
-            Personal Data Dashboard Course
+            <span style={{ color: "var(--accent-500)" }}>~/python-course</span>{" "}
+            <span style={{ color: "var(--text-secondary)" }}>$</span> dashboard
           </span>
         </div>
 
@@ -423,8 +424,8 @@ export default function Home() {
                   key={assignment.id}
                   className="group rounded-xl p-2.5 transition-colors duration-150"
                   style={{
-                    background: complete ? "rgba(52,211,153,0.07)" : "var(--bg-card)",
-                    border: `1px solid ${complete ? "rgba(52,211,153,0.25)" : "var(--border-subtle)"}`,
+                    background: complete ? "rgba(45,255,106,0.08)" : "var(--bg-card)",
+                    border: `1px solid ${complete ? "rgba(45,255,106,0.30)" : "var(--border-subtle)"}`,
                   }}
                 >
                   <div className="flex items-center justify-between gap-1">
@@ -467,12 +468,15 @@ export default function Home() {
           <div
             className="mb-6 rounded-2xl p-5"
             style={{
-              background: "linear-gradient(135deg, var(--bg-surface) 0%, #12192e 100%)",
+              background: "linear-gradient(135deg, var(--bg-surface) 0%, #06180d 100%)",
               border: "1px solid var(--border-subtle)",
               boxShadow: "var(--shadow-card)",
             }}
           >
-            <h2 className="text-xl font-bold gradient-text">Personal Data Dashboard</h2>
+            <h2 className="text-xl font-bold gradient-text">
+              &gt; Personal Data Dashboard
+              <span className="cursor-blink ml-1" aria-hidden="true">&nbsp;</span>
+            </h2>
             <p className="mt-1 text-sm" style={{ color: "var(--text-secondary)" }}>
               Widgets appear automatically when an assignment&apos;s{" "}
               <code
@@ -499,7 +503,7 @@ export default function Home() {
                       className="card-complete rounded-2xl p-5 transition-transform duration-200 hover:-translate-y-0.5"
                       style={{
                         background: "var(--bg-card)",
-                        border: "1px solid rgba(52,211,153,0.2)",
+                        border: "1px solid rgba(45,255,106,0.25)",
                         boxShadow: "var(--shadow-card)",
                       }}
                     >
@@ -584,10 +588,10 @@ export default function Home() {
             <div
               className="mt-4 rounded-2xl px-5 py-4 text-sm font-semibold"
               style={{
-                background: "linear-gradient(135deg, rgba(52,211,153,0.12), rgba(99,102,241,0.12))",
-                border: "1px solid rgba(52,211,153,0.35)",
+                background: "linear-gradient(135deg, rgba(45,255,106,0.14), rgba(0,255,163,0.10))",
+                border: "1px solid rgba(45,255,106,0.40)",
                 color: "var(--complete-fg)",
-                boxShadow: "0 0 24px rgba(52,211,153,0.15)",
+                boxShadow: "0 0 24px rgba(45,255,106,0.20)",
               }}
             >
               🎉 All widgets unlocked — Final Project Integration complete!
