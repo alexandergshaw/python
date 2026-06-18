@@ -1,7 +1,50 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { loadPyodide, type PyodideInterface } from "pyodide";
+import type { PyodideInterface } from "pyodide";
+
+// Load Pyodide from the CDN instead of bundling the npm package. The npm
+// `pyodide` package pulls in Node built-ins and has no way to locate its WASM
+// assets inside a browser bundle, which is why `loadPyodide()` was failing.
+// We inject the matching-version script and call the global `loadPyodide`,
+// pointing `indexURL` at the same CDN folder so it finds the .wasm/stdlib files.
+const PYODIDE_VERSION = "0.29.4";
+const PYODIDE_CDN = `https://cdn.jsdelivr.net/pyodide/v${PYODIDE_VERSION}/full/`;
+
+declare global {
+  interface Window {
+    loadPyodide?: (options?: { indexURL?: string }) => Promise<PyodideInterface>;
+  }
+}
+
+let pyodideScriptPromise: Promise<void> | null = null;
+
+function loadPyodideScript(): Promise<void> {
+  if (typeof window === "undefined") {
+    return Promise.reject(new Error("Pyodide can only load in the browser."));
+  }
+  if (window.loadPyodide) {
+    return Promise.resolve();
+  }
+  if (!pyodideScriptPromise) {
+    pyodideScriptPromise = new Promise<void>((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = `${PYODIDE_CDN}pyodide.js`;
+      script.onload = () => resolve();
+      script.onerror = () => reject(new Error("Failed to download the Pyodide script."));
+      document.head.appendChild(script);
+    });
+  }
+  return pyodideScriptPromise;
+}
+
+async function initPyodide(): Promise<PyodideInterface> {
+  await loadPyodideScript();
+  if (!window.loadPyodide) {
+    throw new Error("loadPyodide is unavailable after loading the Pyodide script.");
+  }
+  return window.loadPyodide({ indexURL: PYODIDE_CDN });
+}
 
 type AssignmentId =
   | "assignment0"
@@ -289,7 +332,7 @@ export default function Home() {
 
     async function loadDashboard() {
       try {
-        const pyodide = await loadPyodide();
+        const pyodide = await initPyodide();
         // Define the unittest harness once; every assignment reuses it.
         pyodide.runPython(TEST_HARNESS);
 
@@ -304,7 +347,9 @@ export default function Home() {
         if (mounted) {
           setStatuses(nextStatuses);
         }
-      } catch {
+      } catch (error) {
+        // Surface the real cause in the console — the UI message is generic.
+        console.error("Pyodide initialization failed:", error);
         if (mounted) {
           setStatuses(
             ASSIGNMENTS.map((assignment) => ({
